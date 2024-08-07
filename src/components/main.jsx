@@ -1,10 +1,10 @@
 import React from "react";
-import { Text,View } from "react-native";
+import { Text,View, StyleSheet} from "react-native";
 import Constants from 'expo';
 
 const Main = () => {
     return (
-    <view style={{marginTop: Constants.statusBarHeight, flexGrow: 1}}>
+    <view className="bg-slate-900">
         <text>Cuaderno Digital</text>
     </view>
     )
