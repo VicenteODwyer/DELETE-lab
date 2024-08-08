@@ -4,7 +4,7 @@ import Constants from 'expo';
 
 const Main = () => {
     return (
-    <view className="bg-slate-900">
+    <view >
         <text>Cuaderno Digital</text>
     </view>
     )
