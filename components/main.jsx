@@ -4,10 +4,11 @@ import Constants from 'expo';
 
 const Main = () => {
     return (
-    <view >
+    <view className="bg-slate-900">
         <text>Cuaderno Digital</text>
     </view>
     )
+    
 }
 
 export default Main
