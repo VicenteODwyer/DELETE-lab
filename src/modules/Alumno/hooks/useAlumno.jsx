@@ -29,5 +29,25 @@ const useAlumno = () => {
         } catch (error) {
         console.error("Error al registrar al alumno: ", error);
     }
+    try {
+        await firebase.firestore().collection("alumnos").update(nuevoAlumno);
+        alert("Alumno actualizado exitosamente");
+        setNombre("");
+        setApellido("");
+        setEmail("");
+        setTelefono("");
+        } catch (error) {
+        console.error("Error al actualizar al Alumno: ", error);
+    }
+    try {
+        await firebase.firestore().collection("alumnos").update(nuevoAlumno).where(uuid)==//Alumno result setHabilitar("0");
+        alert("Alumno eliminado exitosamente");
+        setNombre("");
+        setApellido("");
+        setEmail("");
+        setTelefono("");
+        } catch (error) {
+        console.error("Error al eliminar al Alumno: ", error);
+    }
     };
 }

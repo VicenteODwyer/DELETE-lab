@@ -20,8 +20,29 @@ const useProfesor = () => {
     };
 
     try {
-        await firebase.firestore().collection("profesores").delete(nuevoProfesor);
+        await firebase.firestore().collection("profesores").add(nuevoProfesor);
         alert("Profesor registrado exitosamente");
+        setNombre("");
+        setApellido("");
+        setEmail("");
+        setTelefono("");
+        setHabilitar("1");
+        } catch (error) {
+        console.error("Error al registrar al profesor: ", error);
+    }
+    try {
+        await firebase.firestore().collection("profesores").update(nuevoProfesor);
+        alert("Profesor actualizado exitosamente");
+        setNombre("");
+        setApellido("");
+        setEmail("");
+        setTelefono("");
+        } catch (error) {
+        console.error("Error al registrar al profesor: ", error);
+    }
+    try {
+        await firebase.firestore().collection("profesores").update(nuevoProfesor).where(uuid)==//profesor result setHabilitar("0");
+        alert("Profesor eliminado exitosamente");
         setNombre("");
         setApellido("");
         setEmail("");

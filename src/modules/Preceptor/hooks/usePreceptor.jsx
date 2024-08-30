@@ -26,8 +26,29 @@ const usePreceptor = () => {
         setApellido("");
         setEmail("");
         setTelefono("");
+        setHabilitar("1")
         } catch (error) {
         console.error("Error al registrar al preceptor: ", error);
+    }
+    try {
+        await firebase.firestore().collection("preceptores").update(nuevoPreceptor);
+        alert("Preceptor actualizado exitosamente");
+        setNombre("");
+        setApellido("");
+        setEmail("");
+        setTelefono("");
+        } catch (error) {
+        console.error("Error al actualizar al Preceptor: ", error);
+    }
+    try {
+        await firebase.firestore().collection("preceptores").update(nuevoPreceptor).where(uuid)==//Preceptor result setHabilitar("0");
+        alert("Preceptor eliminado exitosamente");
+        setNombre("");
+        setApellido("");
+        setEmail("");
+        setTelefono("");
+        } catch (error) {
+        console.error("Error al eliminar al Preceptor: ", error);
     }
     };
 }
