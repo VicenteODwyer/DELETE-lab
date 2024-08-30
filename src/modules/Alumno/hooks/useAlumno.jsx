@@ -20,7 +20,7 @@ const useAlumno = () => {
     };
 
     try {
-        await firebase.firestore().collection("alumnos").delete(nuevoAlumno);
+        await firebase.firestore().collection("alumnos").add(nuevoAlumno);
         alert("Alumno registrado exitosamente");
         setNombre("");
         setApellido("");

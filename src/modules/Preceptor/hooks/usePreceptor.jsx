@@ -20,7 +20,7 @@ const usePreceptor = () => {
     };
 
     try {
-        await firebase.firestore().collection("preceptores").delete(nuevoPreceptor);
+        await firebase.firestore().collection("preceptores").add(nuevoPreceptor);
         alert("Preceptor registrado exitosamente");
         setNombre("");
         setApellido("");
