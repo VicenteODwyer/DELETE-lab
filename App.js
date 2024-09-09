@@ -1,12 +1,13 @@
 import React from 'react' ;
 import {StyleSheet, View} from 'react-native';
-import Main from './src/main.jsx';
-import './src/modules/main.css';
+import Main from './src/components/main.jsx';
+
+
 
 
 export default function App() {
   return (
-     <View style={styles.container}>
+     <View >
       <Main/>
       </View>
   );
