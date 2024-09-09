@@ -3,52 +3,58 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 const useProfesor = () => {
+    const [dni, setDni] = useState("");
     const [nombre, setNombre] = useState("");
-    const [apellido, setApellido] = useState("");
+    const [apelldnio, setApelldnio] = useState("");
     const [email, setEmail] = useState("");
     const [telefono, setTelefono] = useState("");
+    const [habilitar, setHabilitar] = useState(1);
 
     const handleSubmit = async (e) => {
     e.preventDefault();
 
     const nuevoProfesor = {
+        dni,
         nombre,
-        apellido,
+        apelldnio,
         email,
         telefono,
+        habilitar,
         created_at: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
     try {
-        await firebase.firestore().collection("profesores").add(nuevoProfesor);
+        await firebase.firestore().collection("profesores").doc(dni).set(nuevoProfesor);
         alert("Profesor registrado exitosamente");
-        setNombre("");
-        setApellido("");
-        setEmail("");
-        setTelefono("");
-        setHabilitar("1");
+        limpiarFormulario();
         } catch (error) {
         console.error("Error al registrar al profesor: ", error);
     }
     try {
-        await firebase.firestore().collection("profesores").update(nuevoProfesor);
+        await firebase.firestore().collection("profesores").doc(dni).update(nuevoProfesor);
         alert("Profesor actualizado exitosamente");
-        setNombre("");
-        setApellido("");
-        setEmail("");
-        setTelefono("");
+        limpiarFormulario();
         } catch (error) {
-        console.error("Error al registrar al profesor: ", error);
+        console.error("Error al actualizar al profesor: ", error);
     }
     try {
-        await firebase.firestore().collection("profesores").update(nuevoProfesor).where(uuid)==//profesor result setHabilitar("0");
-        alert("Profesor eliminado exitosamente");
+        await firebase.firestore().collection("profesores").doc(dni).update({
+            habilitar: 0,
+            updated_at: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        setHabilitar(0);
+        alert("Profesor deshabilitado exitosamente");
+    } catch (error) {
+        console.error("Error al deshabilitar al profesor: ", error);
+    }
+    };
+
+    const limpiarFormulario = () => {
+        setDni("");
         setNombre("");
-        setApellido("");
+        setApelldnio("");
         setEmail("");
         setTelefono("");
-        } catch (error) {
-        console.error("Error al registrar al profesor: ", error);
-    }
+        setHabilitar(1);
     };
 }
