@@ -6,7 +6,7 @@ import { Feather } from '@expo/vector-icons';
 const Main = () => {
     return (
         <LinearGradient
-        colors={['#8b5cf6', '#ec4899']}
+        colors={['#6b46c1', '#ec4899']}
         style={styles.container}
         >
         <ScrollView contentContainerStyle={styles.scrollView}>
