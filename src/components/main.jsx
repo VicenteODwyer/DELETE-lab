@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
       color: 'white',
     },
     footer: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      
       padding: 24,
     },
     footerContent: {
@@ -91,6 +91,40 @@ const styles = StyleSheet.create({
     iconButton: {
       marginLeft: 16,
     },
+    footer: {
+      width: '100%',
+      padding: 10,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      alignItems: 'center',
+      position: 'absolute',
+      bottom: 0,
+    },
+    footerContent: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '100%',
+    },
+    creators: {
+      alignItems: 'flex-start',
+    },
+    socialMedia: {
+      alignItems: 'flex-end',
+    },
+    sectionHeading: {
+      color: '#fff',
+      fontWeight: 'bold',
+      marginBottom: 5,
+    },
+    creatorName: {
+      color: '#fff',
+    },
+    socialIcons: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    iconButton: {
+      marginHorizontal: 5
+  },
   });
 
 export default Main
