@@ -11,8 +11,13 @@ import Component from './src/components/Mesage.jsx';
 
 export default function App() {
   return (
+<<<<<<< HEAD
      <View>
       <Comunication /> 
+=======
+      <View>
+      <NotebookCover /> 
+>>>>>>> 930559c98d188f0b26ff84a34ccafed799724f6e
       </View>
   );
 }
