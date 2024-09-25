@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'; // Agregado TextInput
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { Feather } from '@expo/vector-icons'; 
 import Footer from './footer';
@@ -16,7 +16,11 @@ const NotebookCover = () => {
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.border}>
-            <Text style={styles.infoText}>Nombre del estudiante: ________________</Text>
+            <Text style={styles.infoText}>Nombre del estudiante: </Text>
+            <TextInput
+              placeholder="Escribe aquí el nombre del estudiante"
+              onChangeText={text => onChangeText(text)}
+            />
             <Text style={styles.infoText}>Curso: ________ División: ________ Turno: ________</Text>
           </View>
           <View>

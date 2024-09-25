@@ -3,6 +3,7 @@ import { Text,View, ScrollView,StyleSheet,TouchableOpacity  } from "react-native
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 import Footer from './footer';
+
 const Main = () => {
     return (
         <LinearGradient
@@ -15,7 +16,7 @@ const Main = () => {
         </View>
 
         <Footer/>
-        
+
         </ScrollView>
         </LinearGradient>
     )
