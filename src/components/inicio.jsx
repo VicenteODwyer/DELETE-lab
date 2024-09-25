@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native'; // Agregado TextInput
+import { View, Text, StyleSheet, TextInput } from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient'; 
 
 import Footer from './footer';
@@ -18,10 +18,24 @@ const NotebookCover = () => {
           <View style={styles.border}>
             <Text style={styles.infoText}>Nombre del estudiante: </Text>
             <TextInput
+              style={styles.textInputName}
               placeholder="Escribe aquí el nombre del estudiante"
               onChangeText={text => onChangeText(text)}
             />
-            <Text style={styles.infoText}>Curso: ________ División: ________ Turno: ________</Text>
+            <Text style={styles.infoText}>
+              Curso: <TextInput
+              style={styles.textInput}
+              placeholder="Curso"
+              onChangeText={text => onChangeText(text)}
+            /> División: <TextInput
+            style={styles.textInput}
+              placeholder="División"
+              onChangeText={text => onChangeText(text)}
+            /> Turno: <TextInput
+            style={styles.textInput}
+              placeholder="Turno"
+              onChangeText={text => onChangeText(text)}
+            /></Text>
           </View>
           <View>
             <Text style={styles.indexTitle}>Índice</Text>
@@ -76,6 +90,19 @@ const styles = StyleSheet.create({
   indexItem: {
     fontSize: 12,
   },
+  textInput: {
+    borderWidth: 1,
+    borderColor: 'black',
+    backgroundColor: 'white',
+    width: 75
+  },  
+  textInputName: {
+    borderWidth: 1,
+    borderColor: 'black',
+    backgroundColor: 'white',
+    width: 250
+  },  
+  
 });
 
 export default NotebookCover;
