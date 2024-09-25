@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient'; 
-
+import Header from './header';
 import Footer from './footer';
 
 const NotebookCover = () => {
@@ -10,6 +10,7 @@ const NotebookCover = () => {
     colors={['#6b46c1', '#ec4899']}
     style={styles.container}
     >
+      < Header/>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>EPET N°20</Text>
           <Text style={styles.subtitle}>Cuaderno de Comunicaciones</Text>
@@ -50,14 +51,14 @@ const NotebookCover = () => {
             <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Horario Escolar')}>
               <Text>2. Horario Escolar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Inasistencias y Tardanzas')}>
-              <Text>3. Inasistencias y Tardanzas</Text>
+            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Comunicados')}>
+              <Text>3. Comunicados</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Calificaciones Diarias y Bimestrales')}>
-              <Text>4. Calificaciones Diarias y Bimestrales</Text>
+            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Notas')}>
+              <Text>4. Notas</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Citaciones y Notificaciones')}>
-              <Text>5. Citaciones y Notificaciones</Text>
+            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Entrada y retiro en horas sin actividad')}>
+              <Text>5. Entrada y retiro en horas sin actividad</Text>
             </TouchableOpacity>
           </View>
         </View>
