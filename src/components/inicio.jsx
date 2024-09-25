@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native'; 
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient'; 
 
 import Footer from './footer';
@@ -36,14 +36,29 @@ const NotebookCover = () => {
               placeholder="Turno"
               onChangeText={text => onChangeText(text)}
             /></Text>
+          <Button
+          style={styles.button}
+            title="Guardar Información"
+            onPress={() => console.log('Información guardada con éxito')}
+          />
           </View>
           <View>
             <Text style={styles.indexTitle}>Índice</Text>
-            <Text style={styles.indexItem}>1. Datos del Alumno</Text>
-            <Text style={styles.indexItem}>2. Horario Escolar</Text>
-            <Text style={styles.indexItem}>3. Inasistencias y Tardanzas</Text>
-            <Text style={styles.indexItem}>4. Calificaciones Diarias y Bimestrales</Text>
-            <Text style={styles.indexItem}>5. Citaciones y Notificaciones</Text>
+            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Datos del Alumno')}>
+              <Text>1. Datos del Alumno</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Horario Escolar')}>
+              <Text>2. Horario Escolar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Inasistencias y Tardanzas')}>
+              <Text>3. Inasistencias y Tardanzas</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Calificaciones Diarias y Bimestrales')}>
+              <Text>4. Calificaciones Diarias y Bimestrales</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Citaciones y Notificaciones')}>
+              <Text>5. Citaciones y Notificaciones</Text>
+            </TouchableOpacity>
           </View>
         </View>
         
@@ -102,7 +117,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: 250
   },  
-  
+  button: {
+  backgroundColor: 'skyblue',
+  width: 75,
+  height: 40,
+  }
 });
 
 export default NotebookCover;

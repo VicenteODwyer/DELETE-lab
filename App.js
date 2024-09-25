@@ -10,7 +10,7 @@ import Comunication from './src/components/comunicado.jsx';
 export default function App() {
   return (
      <View>
-      <Main /> 
+      <NotebookCover /> 
       </View>
   );
 }
