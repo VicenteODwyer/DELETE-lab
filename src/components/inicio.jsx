@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'; // Agregado TextInput
+import { View, Text, StyleSheet, TextInput } from 'react-native'; // Agregado TextInput
 import { LinearGradient } from 'expo-linear-gradient'; 
-import { Feather } from '@expo/vector-icons'; 
+
 import Footer from './footer';
 
 const NotebookCover = () => {
