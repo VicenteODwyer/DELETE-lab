@@ -31,8 +31,7 @@ const Main = () => {
         <View style={styles.modalView}>
         <Button title="Cerrar" onPress={() => setModalVisible(false)} /> {/* Botón para cerrar */}
           <LoginForm />
-         
-        </View>
+        </View> 
       </Modal>
     </LinearGradient>
   );
