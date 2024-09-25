@@ -15,9 +15,9 @@ const Main = () => {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.mainContent}>
           <Text style={styles.mainHeading}>Cuaderno Digital</Text>
-          
+          <Button  onPress={LoginForm}>Iniciar Sesión</Button>
         </View>
-        <Footer />
+        <Footer/>
       </ScrollView>
     </LinearGradient>
   );
