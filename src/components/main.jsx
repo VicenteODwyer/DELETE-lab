@@ -3,8 +3,10 @@ import { Text, View, ScrollView, StyleSheet, Button } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import Footer from './footer';
 import NotebookCover from "./inicio";
+import LoginForm from "./iniciar";
 
-const Main = ({ navigation }) => {
+
+const Main = () => {
   return (
     <LinearGradient
       colors={['#6b46c1', '#ec4899']}
@@ -13,9 +15,7 @@ const Main = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.mainContent}>
           <Text style={styles.mainHeading}>Cuaderno Digital</Text>
-          <Button 
-            title="Iniciar Sesión" 
-          />
+          <Button  onPress={LoginForm}>Iniciar Sesión</Button>
         </View>
         <Footer/>
       </ScrollView>
