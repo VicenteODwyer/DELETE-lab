@@ -13,68 +13,51 @@ const Horario = () => {
             <Text style={styles.title}>EPET N°20</Text>
             <Text style={styles.subtitle}>Horarios</Text>
         </View>
-        <View>
-            <Text>Horarios de Clases</Text>
-            <Image
-                source={require('./images/Horarios/HorarioCLases.jpg')}
+        <View style={styles.contentContainer}>
+            <Text style={styles.classTitle}>Horarios de Clases 6°3°</Text>
+            <Image 
+                source={require('C:/DELETE-lab/src/images/Horarios/HorarioCLases.jpg')} // Asegúrate de que la ruta sea correcta
+                style={styles.image} // Agrega un estilo para la imagen
+            />
+            <Text style={styles.classTitle}>Horarios de Taller 6°3°</Text>
+            <Image 
+                source={require('C:/DELETE-lab/src/images/Horarios/HorarioTaller.png')} // Asegúrate de que la ruta sea correcta
+                style={styles.image} // Agrega un estilo para la imagen
             />
         </View>
         <Footer/>
     </LinearGradient>
 );};
 
+// Agrega un estilo para la imagen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    scrollView: {
-        flexGrow: 1,
+    titleContainer: {
+        // ... estilos existentes ...
     },
-    mainContent: {
+    contentContainer: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
+        padding: 20, // Agrega padding para centrar el contenido horizontalmente
+        justifyContent: 'flex-start', // Cambiado para alinear al inicio
     },
-    mainHeading: {
-        fontSize: 32,
+    classTitle: {
+        fontSize: 24,
         fontWeight: 'bold',
         color: 'white',
-    },
-    footer: {
-        padding: 24,
-    },
-    footerContent: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-    },
-    creators: {
-        marginBottom: 16,
-    },
-    sectionHeading: {
-        fontSize: 20,
-        fontWeight: '600',
-        color: 'white',
-        marginBottom: 8,
-    },
-    creatorName: {
-        color: 'white',
-        marginBottom: 4,
-    },
-    socialMedia: {
-        alignItems: 'flex-end',
-    },
-    socialIcons: {
-        flexDirection: 'row',
-    },
-    iconButton: {
-        marginLeft: 16,
     },
     modalView: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semi-transparente
+    },
+    image: {
+        width: '100%', // Ajusta el ancho según sea necesario
+        height: 200, // Ajusta la altura según sea necesario
+        resizeMode: 'contain', // Ajusta el modo de redimensionamiento
     },
 });
 
