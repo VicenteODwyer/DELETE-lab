@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import Header from './header.jsx';
 import Footer from './footer.jsx';
 const Comunication = () => {
   return (
     <LinearGradient
         colors={['#6b46c1', '#ec4899']}
         style={styles.container}>
+          < Header/>
       <Text style={styles.title}>Comunicados</Text>
       <View style={styles.card}>
         <Text style={styles.subtitle}>Santiago Casetti</Text>

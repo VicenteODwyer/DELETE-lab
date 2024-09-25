@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 
-
-
-const NotificationPopup = () => {
-  const [modalVisible, setModalVisible] = useState(true);
-
+const NotificationPopup = ({ modalVisible, setModalVisible }) => {
   return (
     <Modal
       animationType="slide"
@@ -24,6 +20,7 @@ const NotificationPopup = () => {
               <Text style={styles.closeButtonText}>✕</Text>
             </TouchableOpacity>
           </View>
+          
           <View style={styles.notificationItem}>
             <View style={styles.userIcon}>
               <Text style={styles.userIconText}>U</Text>
@@ -108,6 +105,16 @@ const styles = StyleSheet.create({
     timestamp: {
       fontSize: 12,
       color: '#666',
+    },
+    viewButton: {
+      padding: 10,
+      backgroundColor: '#007BFF',
+      borderRadius: 5,
+      marginBottom: 10,
+    },
+    viewButtonText: {
+      color: '#fff',
+      textAlign: 'center',
     },
   });
 
