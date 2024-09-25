@@ -1,25 +1,12 @@
 import React from "react";
 import { Text, View, ScrollView, StyleSheet, Button } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { NavigationContainer } from 'react-navigation/native';
-import { createNativeStackNavigator } from 'react-navigation/native-stack';
 import Footer from './footer';
 import NotebookCover from "./inicio";
+import LoginForm from "./iniciar";
 
 
-const Stack = createNativeStackNavigator();
-
-const Inicio = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="NotebookCover" component={NotebookCover} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
-
-const Main = ({ navigation }) => {
+const Main = () => {
   return (
     <LinearGradient
       colors={['#6b46c1', '#ec4899']}
@@ -28,10 +15,7 @@ const Main = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.mainContent}>
           <Text style={styles.mainHeading}>Cuaderno Digital</Text>
-          <Button 
-            title="Iniciar Sesión" 
-            onPress={() => navigation.navigate('NotebookCover')} 
-          />
+          
         </View>
         <Footer />
       </ScrollView>
