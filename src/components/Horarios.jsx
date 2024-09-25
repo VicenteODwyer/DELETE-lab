@@ -2,13 +2,14 @@ import React, { useState } from "react"; // Agregar useState
 import { Text, View, ScrollView, StyleSheet, Button, Modal, Image } from "react-native"; // Importar Modal
 import { LinearGradient } from 'expo-linear-gradient';
 import Footer from './footer';
-
+import Header from './header';
 const Horario = () => {
     return (
     <LinearGradient
     colors={['#6b46c1', '#ec4899']}
     style={styles.container}
     >
+        <Header/>
         <View style={styles.titleContainer}>
             <Text style={styles.title}>EPET N°20</Text>
             <Text style={styles.subtitle}>Horarios</Text>

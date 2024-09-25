@@ -12,7 +12,7 @@ import HamburgerMenu from './src/components/HamburgerMenu.jsx';
 
 export default function App() {
   return (
-     <View>
+      <View>
       <NotebookCover /> 
       </View>
   );
