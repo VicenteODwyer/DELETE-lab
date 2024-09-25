@@ -7,7 +7,7 @@ import LoginForm from "./iniciar";
 
 const Main = () => {
   const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
-
+  
   return (
     <LinearGradient
       colors={['#6b46c1', '#ec4899']}
@@ -16,7 +16,7 @@ const Main = () => {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.mainContent}>
           <Text style={styles.mainHeading}>Cuaderno Digital</Text>
-          <Button onPress={() => setModalVisible(true)}>Iniciar Sesión</Button> {/* Abrir modal */}
+          <Button title="Iniciar Sesión" onPress={() => setModalVisible(true)}>Iniciar Sesión</Button> {/* Abrir modal */}
         </View>
         <Footer/>
       </ScrollView>

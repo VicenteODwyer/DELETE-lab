@@ -4,14 +4,14 @@ import Main from './src/components/main.jsx';
 import NotebookCover from './src/components/inicio.jsx';
 import Comunication from './src/components/comunicado.jsx';
 import LoginForm from './src/components/iniciar.jsx';
-
+import NotificationPopup from './src/components/Notification.jsx';
 
 
 
 export default function App() {
   return (
      <View>
-      <Main /> 
+      <NotificationPopup /> 
       </View>
   );
 }
