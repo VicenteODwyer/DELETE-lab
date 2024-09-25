@@ -20,33 +20,33 @@ const useProfesor = () => {
         email,
         telefono,
         habilitar,
-        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+                created_at: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
     try {
         await firebase.firestore().collection("profesores").doc(dni).set(nuevoProfesor);
-        alert("Profesor registrado exitosamente");
-        limpiarFormulario();
+            alert("Profesor registrado exitosamente");
+            limpiarFormulario();
         } catch (error) {
-        console.error("Error al registrar al profesor: ", error);
-    }
-    try {
-        await firebase.firestore().collection("profesores").doc(dni).update(nuevoProfesor);
-        alert("Profesor actualizado exitosamente");
-        limpiarFormulario();
+            console.error("Error al registrar al profesor: ", error);
+        }
+        try {
+            await firebase.firestore().collection("profesores").doc(dni).update(nuevoProfesor);
+            alert("Profesor actualizado exitosamente");
+            limpiarFormulario();
         } catch (error) {
-        console.error("Error al actualizar al profesor: ", error);
-    }
-    try {
-        await firebase.firestore().collection("profesores").doc(dni).update({
-            habilitar: 0,
-            updated_at: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        setHabilitar(0);
-        alert("Profesor deshabilitado exitosamente");
-    } catch (error) {
-        console.error("Error al deshabilitar al profesor: ", error);
-    }
+            console.error("Error al actualizar al profesor: ", error);
+        }
+        try {
+            await firebase.firestore().collection("profesores").doc(dni).update({
+                habilitar: 0,
+                updated_at: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            setHabilitar(0);
+            alert("Profesor deshabilitado exitosamente");
+        } catch (error) {
+            console.error("Error al deshabilitar al profesor: ", error);
+        }
     };
 
     const limpiarFormulario = () => {
