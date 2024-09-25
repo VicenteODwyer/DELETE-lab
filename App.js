@@ -11,7 +11,7 @@ import LoginForm from './src/components/iniciar.jsx';
 export default function App() {
   return (
      <View>
-      <LoginForm /> 
+      <Main /> 
       </View>
   );
 }
