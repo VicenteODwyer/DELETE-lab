@@ -23,9 +23,6 @@ const Footer = () => {
                 <TouchableOpacity style={styles.iconButton}>
                     <Feather name="instagram" size={24} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.iconButton}>
-                    <Feather name="linkedin" size={24} color="white" />
-                </TouchableOpacity>
                 </View>
             </View>
             </View>
