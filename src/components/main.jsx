@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Footer from './footer';
 import NotebookCover from "./inicio";
 import LoginForm from "./iniciar";
-import Header from "./header";
+
 const Main = () => {
   const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
   
@@ -13,7 +13,7 @@ const Main = () => {
       colors={['#6b46c1', '#ec4899']}
       style={styles.container}
     >
-      < Header/>
+      
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.mainContent}>
           <Text style={styles.mainHeading}>Cuaderno Digital</Text>

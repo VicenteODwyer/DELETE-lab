@@ -3,8 +3,12 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button} from 'reac
 import { LinearGradient } from 'expo-linear-gradient'; 
 import Header from './header';
 import Footer from './footer';
+import { useRouter } from 'expo-router';
+import {Link} from 'expo-router'
 
 const NotebookCover = () => {
+const router = useRouter()
+
   return (
     <LinearGradient
     colors={['#6b46c1', '#ec4899']}
@@ -51,9 +55,9 @@ const NotebookCover = () => {
             <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Horario Escolar')}>
               <Text>2. Horario Escolar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Comunicados')}>
+            <Link href='/Comunicado'> <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Comunicados')}> 
               <Text>3. Comunicados</Text>
-            </TouchableOpacity>
+            </TouchableOpacity></Link>
             <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Notas')}>
               <Text>4. Notas</Text>
             </TouchableOpacity>

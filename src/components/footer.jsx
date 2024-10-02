@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons'; 
+import {Link} from 'expo-router';
 
 const Footer = () => {
     return (
@@ -15,13 +16,13 @@ const Footer = () => {
                 <Text style={styles.sectionHeading}>Redes Sociales</Text>
                 <View style={styles.socialIcons}>
                 <TouchableOpacity style={styles.iconButton}>
-                    <Feather name="facebook" size={24} color="white" />
+                   <Link href="https://www.facebook.com/EPET20/?locale=es_LA"> <Feather name="facebook" size={24} color="white" /></Link>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.iconButton}>
-                    <Feather name="twitter" size={24} color="white" />
+                   <Link href="https://www.instagram.com/epet20educacion/"> <Feather name="twitter" size={24} color="white" /></Link>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.iconButton}>
-                    <Feather name="instagram" size={24} color="white" />
+                <Link href="https://www.instagram.com/epet20educacion/"><Feather name="instagram" size={24} color="white" /></Link>
                 </TouchableOpacity>
                 </View>
             </View>
