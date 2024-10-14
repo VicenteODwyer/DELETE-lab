@@ -2,7 +2,7 @@ import { useState } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 
-const useAlumno = () => {
+const useTutor = () => {
     const [dni, setDni] = useState("");
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
@@ -13,7 +13,7 @@ const useAlumno = () => {
     const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const nuevoAlumno = {
+    const nuevoTutor = {
         dni,
         nombre,
         apellido,
@@ -24,28 +24,28 @@ const useAlumno = () => {
     };
 
     try {
-        await firebase.firestore().collection("alumnos").doc(dni).set(nuevoAlumno);
-        alert("Alumno registrado exitosamente");
+        await firebase.firestore().collection("Tutores").doc(dni).set(nuevoTutor);
+        alert("Tutor registrado exitosamente");
         limpiarFormulario();
         } catch (error) {
-        console.error("Error al registrar al alumno: ", error);
+        console.error("Error al registrar al Tutor: ", error);
     }
     try {
-        await firebase.firestore().collection("alumnos").doc(dni).update(nuevoProfesor);
-        alert("Alumno actualizado exitosamente");
+        await firebase.firestore().collection("tutores").doc(dni).update(nuevoTutor);
+        alert("Tutor actualizado exitosamente");
         limpiarFormulario();
         } catch (error) {
-        console.error("Error al actualizar al Alumno: ", error);
+        console.error("Error al actualizar al Tutor: ", error);
     }
     try {
-        await firebase.firestore().collection("alumnos").doc(dni).update({
+        await firebase.firestore().collection("tutores").doc(dni).update({
             habilitar: 0,
             updated_at: firebase.firestore.FieldValue.serverTimestamp()
         });
         setHabilitar(0);
-        alert("Alumno eliminado exitosamente");
+        alert("Tutor deshabilitado exitosamente");
         } catch (error) {
-        console.error("Error al eliminar al Alumno: ", error);
+        console.error("Error al eliminar al Tutor: ", error);
     }
     };
 

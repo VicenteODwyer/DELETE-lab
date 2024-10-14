@@ -5,7 +5,7 @@ import "firebase/firestore";
 const useProfesor = () => {
     const [dni, setDni] = useState("");
     const [nombre, setNombre] = useState("");
-    const [apelldnio, setApelldnio] = useState("");
+    const [apellido, setApellido] = useState("");
     const [email, setEmail] = useState("");
     const [telefono, setTelefono] = useState("");
     const [habilitar, setHabilitar] = useState(1);
@@ -16,11 +16,11 @@ const useProfesor = () => {
     const nuevoProfesor = {
         dni,
         nombre,
-        apelldnio,
+        apellido,
         email,
         telefono,
         habilitar,
-                created_at: firebase.firestore.FieldValue.serverTimestamp(),
+        created_at: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
     try {
