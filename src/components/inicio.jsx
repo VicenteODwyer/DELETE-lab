@@ -3,12 +3,9 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button} from 'reac
 import { LinearGradient } from 'expo-linear-gradient'; 
 import Header from './Header';
 import Footer from './Footer';
-import { useRouter } from 'expo-router';
 import {Link} from 'expo-router'
 
 const NotebookCover = () => {
-const router = useRouter()
-
   return (
     <LinearGradient
     colors={['#6b46c1', '#ec4899']}
