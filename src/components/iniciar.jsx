@@ -1,7 +1,30 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, TextInput } from "react-native"; // Asegúrate de importar TextInput
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"; 
+import { useState } from 'react'; 
+import { useNavigation } from '@react-navigation/native'; // Importar useNavigation
 
 export default function LoginForm() {
+  const [email, setEmail] = useState(''); 
+  const [password, setPassword] = useState(''); 
+  const navigation = useNavigation(); // Inicializar useNavigation
+
+  const handleLogin = () => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user; 
+        console.log('Usuario autenticado:', user);
+        // Redirigir a otra página después de iniciar sesión
+        navigation.navigate('./inicio'); // Cambia 'NombreDeLaPantalla' por el nombre de la pantalla a la que deseas navegar
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error('Error en el inicio de sesión:', errorCode, errorMessage);
+      });
+  };
+
   return (
     <View style={styles.loginContainer}> {/* Cambiar className a style */}
       <Text style={styles.closeButton}>&times;</Text>
@@ -10,6 +33,8 @@ export default function LoginForm() {
         <TextInput
           style={styles.input} // Cambiar className a style
           placeholder="Ingrese Usuario."
+          value={email} 
+          onChangeText={setEmail} 
         />
       </View>
       <View style={styles.formGroup}> {/* Cambiar className a style */}
@@ -18,9 +43,11 @@ export default function LoginForm() {
           style={styles.input} /* Cambiar className a style */
           placeholder="Ingrese Contraseña."
           secureTextEntry={true}
+          value={password} 
+          onChangeText={setPassword} 
         />
       </View>
-      <TouchableOpacity style={styles.loginButton}> {/* Cambiar className a style */}
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}> {/* Cambiar className a style */}
         <Text style={styles.buttonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
     </View>
