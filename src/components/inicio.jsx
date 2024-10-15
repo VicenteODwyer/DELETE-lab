@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient'; 
-import Header from './header';
-import Footer from './footer';
+import Header from './Header';
+import Footer from './Footer';
 import { useRouter } from 'expo-router';
 import {Link} from 'expo-router'
 

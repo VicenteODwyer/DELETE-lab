@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Header from './header.jsx';
-import Footer from './footer.jsx';
+import Header from './Header.jsx';
+import Footer from './Footer.jsx';
 import Component from './Mesage.jsx'; // Importar el componente Component
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
