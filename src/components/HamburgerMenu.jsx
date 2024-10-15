@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, Linking } from 'react-native';
 import Feather from '@expo/vector-icons/Feather';
+import Horario from './Horarios';
 
 const HamburgerMenu = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -15,7 +16,7 @@ const HamburgerMenu = (props) => {
 
   const menuItems = [
     { title: 'Datos del Alumno', url: 'https://example.com/alumno' },
-    { title: 'Horario Escolar', url: 'https://example.com/horario' },
+    { title: 'Horario Escolar', url: './Horario' },
     { title: 'Comunicado', url: 'https://example.com/comunicado' },
     { title: 'Notas', url: 'https://example.com/notas' },
     { title: 'Entrada y retiro en horas sin actividad', url: 'https://example.com/entrada' },

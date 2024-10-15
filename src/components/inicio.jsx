@@ -4,8 +4,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Header from './Header';
 import Footer from './Footer';
 import {Link} from 'expo-router'
+import { StackActions, useNavigation } from '@react-navigation/native';
 
 const NotebookCover = () => {
+  const navigation = useNavigation();
   return (
     <LinearGradient
     colors={['#6b46c1', '#ec4899']}
@@ -46,13 +48,13 @@ const NotebookCover = () => {
           </View>
           <View>
             <Text style={styles.indexTitle}>Índice</Text>
-            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Datos del Alumno')}>
+            <TouchableOpacity style={styles.indexItem} onPress={() => navigation.dispatch(StackActions.replace,'Horarios')}>
               <Text>1. Datos del Alumno</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Horario Escolar')}>
               <Text>2. Horario Escolar</Text>
             </TouchableOpacity>
-            <Link href='/Comunicado'> <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Comunicados')}> 
+            <Link href='./src/components/Comunicado'> <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Comunicados')}> 
               <Text>3. Comunicados</Text>
             </TouchableOpacity></Link>
             <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Notas')}>
