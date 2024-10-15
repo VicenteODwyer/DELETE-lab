@@ -2,8 +2,8 @@ import React, { useState } from "react"; // Agregar useState
 import { Text, View, ScrollView, StyleSheet, Button, Modal } from "react-native"; // Importar Modal
 import { LinearGradient } from 'expo-linear-gradient';
 import Footer from './Footer';
-import NotebookCover from "./inicio";
-import LoginForm from "./iniciar";
+import NotebookCover from "./Inicio";
+import LoginForm from "./Iniciar";
 
 const Main = () => {
   const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
