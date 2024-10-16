@@ -7,6 +7,8 @@ import {Link} from 'expo-router'
 import { StackActions, useNavigation } from '@react-navigation/native';
 
 const NotebookCover = () => {
+  
+
   const navigation = useNavigation();
   return (
     <LinearGradient
@@ -48,10 +50,10 @@ const NotebookCover = () => {
           </View>
           <View>
             <Text style={styles.indexTitle}>Índice</Text>
-            <TouchableOpacity style={styles.indexItem} onPress={() => navigation.dispatch(StackActions.replace,'Horarios')}>
-              <Text>1. Datos del Alumno</Text>
+            <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate()}>
+              <Text>1. Datos del Alumno</Text> 
             </TouchableOpacity>
-            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Horario Escolar')}>
+            <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('Horarios')}>
               <Text>2. Horario Escolar</Text>
             </TouchableOpacity>
             <Link href='./src/components/Comunicado'> <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Comunicados')}> 
