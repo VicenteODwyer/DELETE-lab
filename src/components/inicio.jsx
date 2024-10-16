@@ -1,75 +1,75 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'; 
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient'; 
+import { useNavigation } from '@react-navigation/native';
 import Header from './Header';
 import Footer from './Footer';
-import {Link} from 'expo-router'
-import { StackActions, useNavigation } from '@react-navigation/native';
 
 const NotebookCover = () => {
   
 
   const navigation = useNavigation();
+
   return (
     <LinearGradient
-    colors={['#6b46c1', '#ec4899']}
-    style={styles.container}
+      colors={['#6b46c1', '#ec4899']}
+      style={styles.container}
     >
-      < Header/>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>EPET N°20</Text>
-          <Text style={styles.subtitle}>Cuaderno de Comunicaciones</Text>
-        </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.border}>
-            <Text style={styles.infoText}>Nombre del estudiante: </Text>
-            <TextInput
-              style={styles.textInputName}
-              placeholder="Escribe aquí el nombre del estudiante"
-              onChangeText={text => onChangeText(text)}
-            />
-            <Text style={styles.infoText}>
-              Curso: <TextInput
+      <Header/>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>EPET N°20</Text>
+        <Text style={styles.subtitle}>Cuaderno de Comunicaciones</Text>
+      </View>
+      <View style={styles.infoContainer}>
+        <View style={styles.border}>
+          <Text style={styles.infoText}>Nombre del estudiante: </Text>
+          <TextInput
+            style={styles.textInputName}
+            placeholder="Escribe aquí el nombre del estudiante"
+            onChangeText={text => console.log(text)}
+          />
+          <Text style={styles.infoText}>
+            Curso: <TextInput
               style={styles.textInput}
               placeholder="Curso"
-              onChangeText={text => onChangeText(text)}
+              onChangeText={text => console.log(text)}
             /> División: <TextInput
-            style={styles.textInput}
+              style={styles.textInput}
               placeholder="División"
-              onChangeText={text => onChangeText(text)}
+              onChangeText={text => console.log(text)}
             /> Turno: <TextInput
-            style={styles.textInput}
+              style={styles.textInput}
               placeholder="Turno"
-              onChangeText={text => onChangeText(text)}
-            /></Text>
+              onChangeText={text => console.log(text)}
+            />
+          </Text>
           <Button
-          style={styles.button}
+            style={styles.button}
             title="Guardar Información"
             onPress={() => console.log('Información guardada con éxito')}
           />
-          </View>
-          <View>
-            <Text style={styles.indexTitle}>Índice</Text>
-            <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate()}>
-              <Text>1. Datos del Alumno</Text> 
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('Horarios')}>
-              <Text>2. Horario Escolar</Text>
-            </TouchableOpacity>
-            <Link href='./src/components/Comunicado'> <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Comunicados')}> 
-              <Text>3. Comunicados</Text>
-            </TouchableOpacity></Link>
-            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Notas')}>
-              <Text>4. Notas</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.indexItem} onPress={() => console.log('Entrada y retiro en horas sin actividad')}>
-              <Text>5. Entrada y retiro en horas sin actividad</Text>
-            </TouchableOpacity>
-          </View>
         </View>
-        
+        <View>
+          <Text style={styles.indexTitle}>Índice</Text>
+          <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('DatosAlumno')}>
+            <Text>1. Datos del Alumno</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('HorarioEscolar')}>
+            <Text>2. Horario Escolar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('Comunicados')}>
+            <Text>3. Comunicados</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('Notas')}>
+            <Text>4. Notas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('EntradaRetiro')}>
+            <Text>5. Entrada y retiro en horas sin actividad</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       <Footer/>
-      </LinearGradient>
+    </LinearGradient>
   );
 }
 
