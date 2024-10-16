@@ -6,7 +6,6 @@ import Header from './Header';
 import Footer from './Footer';
 
 const NotebookCover = () => {
-  // Obtener el objeto de navegación
   const navigation = useNavigation();
 
   return (
@@ -123,9 +122,9 @@ const styles = StyleSheet.create({
     width: 250
   },  
   button: {
-  backgroundColor: 'skyblue',
-  width: 75,
-  height: 40,
+    backgroundColor: 'skyblue',
+    width: 75,
+    height: 40,
   }
 });
 
