@@ -1,8 +1,8 @@
 import React, { useState } from "react"; // Agregar useState
 import { Text, View, ScrollView, StyleSheet, Button, Modal, Image } from "react-native"; // Importar Modal
 import { LinearGradient } from 'expo-linear-gradient';
-import Footer from './Footer';
-import Header from './Header';
+import Footer from '../Hooks/Footer';
+import Header from '../Hooks/Header';
 const Horario = () => {
     return (
     <LinearGradient

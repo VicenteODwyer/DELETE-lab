@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { useNavigation } from '@react-navigation/native';
-import Header from './Header';
-import Footer from './Footer';
+import Header from '../Hooks/Header';
+import Footer from '../Hooks/Footer';
 
-const NotebookCover = () => {
-  const navigation = useNavigation();
+const NotebookCover = ({navigation} ) => {
+  
 
   return (
     <LinearGradient
@@ -55,7 +55,7 @@ const NotebookCover = () => {
           <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('HorarioEscolar')}>
             <Text>2. Horario Escolar</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('Comunicados')}>
+          <TouchableOpacity style={styles.indexItem} text= "Comunicados" onPress={ () => navigation.navigate('Comunication')}>
             <Text>3. Comunicados</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('Notas')}>

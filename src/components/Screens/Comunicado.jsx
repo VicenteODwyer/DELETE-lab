@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Header from './Header.jsx';
-import Footer from './Footer.jsx';
-import Component from './Mesage.jsx'; // Importar el componente Component
+import Header from '../Hooks/Header.jsx';
+import Footer from '../Hooks/Footer.jsx';
+import Component from '../Hooks/Mesage.jsx'; // Importar el componente Component
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-const Comunication = () => {
+const Comunication = ( navigation ) => {
   const [messages, setMessages] = useState([]); // Estado para almacenar los mensajes
   const [modalVisible, setModalVisible] = useState(false);
   const [author, setAuthor] = useState('Santiago Casetti'); // Estado para almacenar el autor

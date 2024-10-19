@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, Linking } from 'react-native';
 import Feather from '@expo/vector-icons/Feather';
-import Horario from './Horarios';
+import Horario from '../Screens/Horarios';
 
 const HamburgerMenu = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
