@@ -6,7 +6,7 @@ import Footer from '../Hooks/Footer.jsx';
 import Component from '../Hooks/Mesage.jsx'; // Importar el componente Component
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-const Comunication = ( navigation ) => {
+const Comunication = ( {navigation} ) => {
   const [messages, setMessages] = useState([]); // Estado para almacenar los mensajes
   const [modalVisible, setModalVisible] = useState(false);
   const [author, setAuthor] = useState('Santiago Casetti'); // Estado para almacenar el autor

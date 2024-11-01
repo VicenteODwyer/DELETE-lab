@@ -4,13 +4,13 @@ import HamburgerMenu from './HamburgerMenu';
 import NotificationPopup from './Notification';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const Header = () => {
+const Header = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.headerContainer}>
       <View style={styles.hamburgerContainer}>
-        <HamburgerMenu />
+        <HamburgerMenu navigation={navigation} />
       </View>
       <View style={styles.notificationContainer}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>

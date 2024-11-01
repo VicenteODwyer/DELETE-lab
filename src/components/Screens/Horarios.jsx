@@ -3,7 +3,7 @@ import { Text, View, ScrollView, StyleSheet, Button, Modal, Image } from "react-
 import { LinearGradient } from 'expo-linear-gradient';
 import Footer from '../Hooks/Footer';
 import Header from '../Hooks/Header';
-const Horario = () => {
+const Horario = ({navigation}) => {
     return (
     <LinearGradient
     colors={['#6b46c1', '#ec4899']}
@@ -17,12 +17,12 @@ const Horario = () => {
         <View style={styles.contentContainer}>
             <Text style={styles.classTitle}>Horarios de Clases 6°3°</Text>
             <Image 
-                source={require('C:/DELETE-lab/src/images/Horarios/HorarioCLases.jpg')} // Asegúrate de que la ruta sea correcta
+                source={require('../../images/Horarios/HorarioCLases.jpg')} // Asegúrate de que la ruta sea correcta
                 style={styles.image} // Agrega un estilo para la imagen
             />
             <Text style={styles.classTitle}>Horarios de Taller 6°3°</Text>
             <Image 
-                source={require('C:/DELETE-lab/src/images/Horarios/HorarioTaller.png')} // Asegúrate de que la ruta sea correcta
+                source={require('../../images/Horarios/HorarioTaller.png')} // Asegúrate de que la ruta sea correcta
                 style={styles.image} // Agrega un estilo para la imagen
             />
         </View>
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Horario
+export default Horario;

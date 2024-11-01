@@ -4,10 +4,10 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react'; 
 import { useNavigation } from '@react-navigation/native'; // Importar useNavigation
 
-export default function LoginForm() {
+const Iniciar = () => {
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState(''); 
-  const navigation = useNavigation(); // Inicializar useNavigation
+ 
 
   const handleLogin = () => {
     const auth = getAuth();
@@ -97,3 +97,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+export default Iniciar;

@@ -1,95 +1,160 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, Linking } from 'react-native';
-import Feather from '@expo/vector-icons/Feather';
-import Horario from '../Screens/Horarios';
+import React, { useState, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Animated, Dimensions } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-const HamburgerMenu = (props) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+const { height, width } = Dimensions.get('window');
+
+const HamburgerMenu = ({navigation}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const slideAnim = useRef(new Animated.Value(-width)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  
 
   const toggleMenu = () => {
-    setIsOpen(prevState => !prevState);
-  }
+    setIsOpen(!isOpen);
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: isOpen ? -width : 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: isOpen ? 0 : 0.5,
+        duration: 300,
+        useNativeDriver: true,
+      })
+    ]).start();
+  };
 
-  const openLink = (url) => {
-    Linking.openURL(url).catch(err => console.error("Error al abrir el enlace:", err));
-  }
-
-  const menuItems = [
-    { title: 'Datos del Alumno', url: 'https://example.com/alumno' },
-    { title: 'Horario Escolar', url: './Horario' },
-    { title: 'Comunicado', url: 'https://example.com/comunicado' },
-    { title: 'Notas', url: 'https://example.com/notas' },
-    { title: 'Entrada y retiro en horas sin actividad', url: 'https://example.com/entrada' },
-  ];
+  const handleNavigation = (route) => {
+    navigation.navigate(route);
+    toggleMenu(); // Cerrar el menú después de navegar
+  };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleMenu}>
-        <Text style={styles.hamburgerButton}><Feather name="menu" size={24} color="black" /></Text>
+      <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
+        <Feather name="menu" size={24} color="black" />
       </TouchableOpacity>
 
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isOpen}
-        onRequestClose={toggleMenu}
-      >
-        <View style={styles.modal}>
-          <View style={styles.menuContainer}>
-            <View style={styles.header}>
-              <Text>Menu</Text>
+      {isOpen && (
+        <>
+          <Animated.View 
+            style={[styles.overlay, { opacity: fadeAnim }]}
+            onTouchStart={toggleMenu}
+          />
+          <Animated.View 
+            style={[styles.menu, { transform: [{ translateX: slideAnim }] }]}
+          >
+            <View style={styles.menuHeader}>
+              <Text style={styles.menuTitle}>Menú</Text>
               <TouchableOpacity onPress={toggleMenu}>
-                <Text style={styles.closeButton}>×</Text>
+                <Feather name="x" size={24} color="black" />
               </TouchableOpacity>
             </View>
-            {menuItems.map((item, index) => (
-              <TouchableOpacity key={index} onPress={() => openLink(item.url)}>
-                <Text style={styles.menuItem}>{item.title}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-      </Modal>
+            <TouchableOpacity 
+              style={styles.menuItem}
+              onPress={() => handleNavigation("Inicio")}
+            >
+              <Text style={styles.menuText}>Inicio</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.menuItem}
+              onPress={() => handleNavigation("DatosAlumno")}
+            >
+              <Text style={styles.menuText}>Datos del Alumno</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.menuItem}
+              onPress={() => handleNavigation("Horario")}
+            >
+              <Text style={styles.menuText}>Horario Escolar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.menuItem}
+              onPress={() => navigation.navigate("Comunicado")}
+            >
+              <Text style={styles.menuText}>Comunicado</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.menuItem}
+             
+            >
+              <Text style={styles.menuText}>Notas</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.menuItem}
+
+            >
+              <Text style={styles.menuText}>Entrada y retiro</Text>
+            </TouchableOpacity>
+          </Animated.View>
+        </>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'flex-start',
-      alignItems: 'flex-start',
+  container: {
+    flex: 1,
+  },
+  menuButton: {
+    position: 'absolute',
+    top: 10,
+    left: 20, // Botón en el lado izquierdo
+    zIndex: 3,
+    padding: 10,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'black',
+    zIndex: 1,
+  },
+  menu: {
+    position: 'absolute',
+    top: 20,
+    left: 0,
+    width: width * 0.3, // 70% del ancho de la pantalla
+    height: height * 0.65, // Usando la altura de la pantalla
+    backgroundColor: 'white',
+    paddingTop: 50,
+    paddingHorizontal: 20,
+    zIndex: 2,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 2,
+      height: 0,
     },
-    modal: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    menuContainer: {
-      backgroundColor: 'white',
-      padding: 20,
-      borderRadius: 10,
-      width: '80%',
-    },
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: 20,
-    },
-    closeButton: {
-      fontSize: 24,
-    },
-    menuItem: {
-      paddingVertical: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: '#eee',
-    },
-    hamburgerButton: {
-      fontSize: 24,
-      padding: 10,
-    }
-  });
-  
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  menuHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  menuTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  menuItem: {
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  menuText: {
+    fontSize: 16,
+    color: '#333',
+  },
+});
+
 export default HamburgerMenu;
