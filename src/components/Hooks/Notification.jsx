@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const NotificationPopup = ({ modalVisible, setModalVisible }) => {
   return (
@@ -17,19 +18,22 @@ const NotificationPopup = ({ modalVisible, setModalVisible }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={styles.header}>
+            <LinearGradient
+              colors={['#9747FF', '#7928CA']}
+              style={styles.header}
+            >
               <Text style={styles.title}>Notificaciones</Text>
               <TouchableOpacity
                 style={styles.closeButton}
                 onPress={() => setModalVisible(false)}
               >
-                <Ionicons name="close" size={24} color="#333" />
+                <Ionicons name="close" size={24} color="white" />
               </TouchableOpacity>
-            </View>
+            </LinearGradient>
             
             <View style={styles.notificationItem}>
               <View style={styles.userIcon}>
-                <Ionicons name="person" size={16} color="#9370DB" />
+                <Ionicons name="person" size={16} color="#9747FF" />
               </View>
               <View style={styles.notificationContent}>
                 <Text style={styles.username}>Exequiel Wiedermann</Text>
@@ -67,6 +71,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 8,
+    overflow: 'hidden',
   },
   header: {
     flexDirection: 'row',
@@ -74,12 +79,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: 'white',
   },
   closeButton: {
     padding: 5,

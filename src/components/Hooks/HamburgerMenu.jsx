@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Dimensions } from 'react-native';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -14,40 +14,16 @@ const MenuItem = ({ icon, text, onPress }) => (
 
 const HamburgerMenu = ({navigation}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const slideAnim = useRef(new Animated.Value(-width)).current;
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const scaleAnim = useRef(new Animated.Value(0.3)).current;
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-    Animated.parallel([
-      Animated.timing(slideAnim, {
-        toValue: isOpen ? -width : 0,
-        duration: 400,
-        useNativeDriver: true,
-      }),
-      Animated.timing(fadeAnim, {
-        toValue: isOpen ? 0 : 0.6,
-        duration: 400,
-        useNativeDriver: true,
-      }),
-      Animated.spring(scaleAnim, {
-        toValue: isOpen ? 0.3 : 1,
-        friction: 8,
-        useNativeDriver: true,
-      })
-    ]).start();
-  };
 
   const handleNavigation = (route) => {
     navigation.navigate(route);
-    toggleMenu();
+    setIsOpen(false);
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity 
-        onPress={toggleMenu} 
+        onPress={() => setIsOpen(true)} 
         style={styles.menuButton}
         activeOpacity={0.7}
       >
@@ -59,73 +35,80 @@ const HamburgerMenu = ({navigation}) => {
         </LinearGradient>
       </TouchableOpacity>
 
-      {isOpen && (
-        <>
-          <Animated.View 
-            style={[styles.overlay, { opacity: fadeAnim }]}
-            onTouchStart={toggleMenu}
-          />
-          <Animated.View 
-            style={[
-              styles.menu, 
-              { 
-                transform: [
-                  { translateX: slideAnim },
-                  { scale: scaleAnim }
-                ] 
-              }
-            ]}
-          >
-            <LinearGradient
-              colors={['#9370DB', '#8A2BE2']}
-              style={styles.menuHeader}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+      >
+        <TouchableOpacity 
+          style={styles.overlay}
+          activeOpacity={1}
+          onPress={() => setIsOpen(false)}
+        >
+          <View style={styles.menuContainer}>
+            <TouchableOpacity 
+              activeOpacity={1} 
+              onPress={(e) => {
+                e.stopPropagation();
+              }}
             >
-              <View style={styles.profileSection}>
-                <View style={styles.avatarContainer}>
-                  <Ionicons name="person-circle" size={60} color="white" />
-                </View>
-                <Text style={styles.welcomeText}>¡Bienvenido!</Text>
-              </View>
-              <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
-                <Feather name="x" size={24} color="white" />
-              </TouchableOpacity>
-            </LinearGradient>
+              <View style={styles.menu}>
+                <LinearGradient
+                  colors={['#9370DB', '#8A2BE2']}
+                  style={styles.menuHeader}
+                >
+                  <View style={styles.profileSection}>
+                    <View style={styles.avatarContainer}>
+                      <Ionicons name="person-circle" size={60} color="white" />
+                    </View>
+                    <Text style={styles.welcomeText}>¡Bienvenido!</Text>
+                  </View>
+                  <TouchableOpacity 
+                    onPress={() => setIsOpen(false)} 
+                    style={styles.closeButton}
+                  >
+                    <Feather name="x" size={24} color="white" />
+                  </TouchableOpacity>
+                </LinearGradient>
 
-            <View style={styles.menuItems}>
-              <MenuItem 
-                icon="home-outline" 
-                text="Inicio" 
-                onPress={() => handleNavigation("Inicio")}
-              />
-              <MenuItem 
-                icon="person-outline" 
-                text="Datos del Alumno" 
-                onPress={() => handleNavigation("DatosAlumno")}
-              />
-              <MenuItem 
-                icon="time-outline" 
-                text="Horario Escolar" 
-                onPress={() => handleNavigation("Horario")}
-              />
-              <MenuItem 
-                icon="chatbubble-outline" 
-                text="Comunicado" 
-                onPress={() => handleNavigation("Comunicado")}
-              />
-              <MenuItem 
-                icon="school-outline" 
-                text="Notas" 
-                onPress={() => handleNavigation("Notas")}
-              />
-              <MenuItem 
-                icon="enter-outline" 
-                text="Entrada y retiro" 
-                onPress={() => handleNavigation("Retiro")}
-              />
-            </View>
-          </Animated.View>
-        </>
-      )}
+                <View style={styles.menuItems}>
+                  <MenuItem 
+                    icon="home-outline" 
+                    text="Inicio" 
+                    onPress={() => handleNavigation("Inicio")}
+                  />
+                  <MenuItem 
+                    icon="person-outline" 
+                    text="Datos del Alumno" 
+                    onPress={() => handleNavigation("DatosAlumno")}
+                  />
+                  <MenuItem 
+                    icon="time-outline" 
+                    text="Horario Escolar" 
+                    onPress={() => handleNavigation("Horario")}
+                  />
+                  <MenuItem 
+                    icon="chatbubble-outline" 
+                    text="Comunicado" 
+                    onPress={() => handleNavigation("Comunicado")}
+                  />
+                  <MenuItem 
+                    icon="school-outline" 
+                    text="Notas" 
+                    onPress={() => handleNavigation("Notas")}
+                  />
+                  <MenuItem 
+                    icon="enter-outline" 
+                    text="Entrada y retiro" 
+                    onPress={() => handleNavigation("Retiro")}
+                  />
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 };
@@ -152,14 +135,18 @@ const styles = StyleSheet.create({
     height: 40,
   },
  
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  menuContainer: {
+    width: width * 0.35,
+    height: height,
+  },
   menu: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: width * 0.25,
-    height: height * 0.75 ,
+    width: width * 0.35,
+    height: height ,
     backgroundColor: 'white',
-    zIndex: 2,
     borderTopRightRadius: 30,
     borderBottomRightRadius: 30,
     shadowColor: "#000",
