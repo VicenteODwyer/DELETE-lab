@@ -1,172 +1,296 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import Header from '../Hooks/Header.jsx';
 import Footer from '../Hooks/Footer.jsx';
 import Component from '../Hooks/Mesage.jsx';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import Fondo from '../Hooks/Fondo';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Comunication = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   const handleAddMessage = (newMessage) => {
     setMessages([...messages, newMessage]);
     setModalVisible(false);
   };
 
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: true }
+  );
+
   return (
-    <View style={styles.mainContainer}>
+    <View style={styles.container}>
       <Fondo />
-      <View style={styles.container}>
-        <Header navigation={navigation} />
-        
-        <View style={styles.content}>
-          <View style={styles.headerSection}>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-              <MaterialIcons name="arrow-back" size={24} color="#666" />
-            </TouchableOpacity>
-            <Text style={styles.title}>Comunicados</Text>
-            <View style={styles.headerButtons}>
-              <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <MaterialIcons name="edit" size={24} color="#666" />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.historyButton}>
-                <MaterialIcons name="history" size={24} color="#666" />
-              </TouchableOpacity>
-            </View>
+      <Header navigation={navigation} />
+      
+      <Animated.ScrollView
+        style={styles.content}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
+        <View style={styles.contentContainer}>
+          <View style={styles.titleWrapper}>
+            <LinearGradient
+              colors={['rgba(255,255,255,0.9)', 'rgba(240,240,255,0.9)']}
+              style={styles.titleContainer}
+            >
+              <MaterialIcons name="notifications" size={35} color="#6B4EFF" />
+              <Text style={styles.title}>Comunicados</Text>
+            </LinearGradient>
           </View>
 
-          <ScrollView 
-            style={styles.scrollView}
-            contentContainerStyle={styles.scrollViewContent}
-          >
-            {messages.length === 0 ? (
-              <View style={styles.emptyContainer}>
-                <Text style={styles.emptyText}>No hay comunicados disponibles</Text>
+          <View style={styles.mainContent}>
+            <View style={styles.contentCard}>
+              <View style={styles.headerTop}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                  <MaterialIcons name="arrow-back" size={24} color="#6B4EFF" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.addButton}>
+                  <LinearGradient
+                    colors={['#9747FF', '#7928CA']}
+                    style={styles.gradientButton}
+                  >
+                    <MaterialIcons name="add" size={24} color="white" />
+                  </LinearGradient>
+                </TouchableOpacity>
               </View>
-            ) : (
-              messages.map((msg, index) => (
-                <View key={index} style={styles.card}>
-                  <View style={styles.messageHeader}>
-                    <View style={styles.userInfo}>
-                      <MaterialIcons name="account-circle" size={24} color="#666" />
-                      <Text style={styles.author}>{msg.author}</Text>
-                    </View>
-                  </View>
-                  <Text style={styles.message}>{msg.text}</Text>
+
+              {messages.length === 0 ? (
+                <View style={styles.emptyStateCard}>
+                  <LinearGradient
+                    colors={['#F8F9FE', '#F0F0FF']}
+                    style={styles.iconContainer}
+                  >
+                    <Ionicons name="notifications-outline" size={80} color="#6B4EFF" />
+                  </LinearGradient>
+                  <Text style={styles.emptyText}>No hay comunicados</Text>
+                  <Text style={styles.emptySubtext}>Los nuevos mensajes aparecerán aquí</Text>
                 </View>
-              ))
-            )}
-          </ScrollView>
+              ) : (
+                messages.map((msg, index) => (
+                  <View key={index} style={styles.messageCard}>
+                    <View style={styles.messageHeader}>
+                      <LinearGradient
+                        colors={['#F8F9FE', '#F0F0FF']}
+                        style={styles.avatarContainer}
+                      >
+                        <MaterialIcons name="account-circle" size={40} color="#6B4EFF" />
+                      </LinearGradient>
+                      <View style={styles.messageInfo}>
+                        <Text style={styles.author}>{msg.author}</Text>
+                        <Text style={styles.timestamp}>Hace 2 horas</Text>
+                      </View>
+                    </View>
+                    <Text style={styles.messageText}>{msg.text}</Text>
+                  </View>
+                ))
+              )}
+            </View>
+          </View>
         </View>
-        
-        <Component
-          visible={modalVisible}
-          onClose={() => setModalVisible(false)}
-          onSubmit={handleAddMessage}
-        />
-        <Footer />
-      </View>
+      </Animated.ScrollView>
+
+      <Component
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSubmit={handleAddMessage}
+      />
+      <Footer scrollY={scrollY} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: '#F8F9FE',
-  },
   container: {
     flex: 1,
+    backgroundColor: '#1e1e1e',
   },
   content: {
     flex: 1,
-    marginTop: 80,
-    marginBottom: 60,
-    paddingHorizontal: 20,
   },
-  headerSection: {
+  contentContainer: {
+    padding: 20,
+    paddingTop: 120,
+    minHeight: '150%',
+  },
+  titleWrapper: {
+    alignItems: 'center',
+    marginBottom: 40,
+    marginTop: 30,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 15,
+    padding: 25,
+    borderRadius: 20,
+    width: '90%',
+    shadowColor: '#6B4EFF',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: '700',
+    color: '#6B4EFF',
+    letterSpacing: 1,
+  },
+  mainContent: {
+    flex: 1,
+    paddingBottom: 200,
+  },
+  contentCard: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 25,
+    padding: 25,
+    shadowColor: '#6B4EFF',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 12,
+  },
+  headerCard: {
+    backgroundColor: 'white',
+    borderRadius: 30,
+    padding: 20,
+    marginBottom: 20,
+    shadowColor: "#6B4EFF",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  headerTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
-    paddingVertical: 10,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 15,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  backButton: {
-    padding: 5,
+    width: '100%',
   },
   title: {
     fontSize: 24,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: '700',
+    color: '#6B4EFF',
   },
-  headerButtons: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  gradientButton: {
+    borderRadius: 15,
+    padding: 10,
   },
-  historyButton: {
-    marginLeft: 15,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollViewContent: {
-    paddingTop: 10,
-  },
-  card: {
+  messageCard: {
     backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 15,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderRadius: 30,
+    padding: 20,
+    marginBottom: 16,
+    width: '100%',
+    shadowColor: "#6B4EFF",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
   },
   messageHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-    paddingBottom: 10,
-  },
-  userInfo: {
-    flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 15,
+  },
+  avatarContainer: {
+    borderRadius: 20,
+    padding: 10,
+    marginRight: 15,
+  },
+  messageInfo: {
+    flex: 1,
   },
   author: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginLeft: 8,
+    fontSize: 18,
+    fontWeight: '600',
     color: '#333',
   },
-  message: {
-    fontSize: 14,
-    color: '#444',
-    lineHeight: 20,
+  messageText: {
+    fontSize: 15,
+    color: '#666',
+    lineHeight: 22,
+    marginTop: 12,
   },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
+  emptyStateCard: {
+    backgroundColor: 'white',
+    borderRadius: 25,
+    padding: 30,
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 20,
+    shadowColor: "#6B4EFF",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 5,
   },
   emptyText: {
     fontSize: 16,
     color: '#666',
+    marginTop: 12,
     textAlign: 'center',
   },
+  timestamp: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 2,
+  },
+  messageFooter: {
+    flexDirection: 'row',
+    marginTop: 16,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#F0F0F0',
+    gap: 20,
+  },
+  footerButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    padding: 8,
+    borderRadius: 15,
+    backgroundColor: '#F8F9FE',
+  },
+  footerButtonText: {
+    color: '#6B4EFF',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  iconContainer: {
+    backgroundColor: '#F8F9FE',
+    borderRadius: 30,
+    padding: 20,
+    marginBottom: 16,
+  },
+  emptySubtext: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 8,
+  },
+  moreButton: {
+    backgroundColor: '#F8F9FE',
+    borderRadius: 12,
+    padding: 8,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'transparent',
+  }
 });
 
 export default Comunication;

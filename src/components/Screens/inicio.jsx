@@ -1,18 +1,26 @@
-import React from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'; 
+import React, { useRef } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Animated, ScrollView } from 'react-native'; 
 import Fondo from '../Hooks/Fondo';
 import Header from '../Hooks/Header';
 import Footer from '../Hooks/Footer';
 
-const NotebookCover = ({navigation} ) => {
+const NotebookCover = ({ navigation }) => {
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: true }
+  );
+
   return (
     <View style={styles.container}>
       <Fondo />
-      <Header/>
-      <ScrollView 
+      <Header navigation={navigation} />
+      
+      <Animated.ScrollView 
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
       >
         <View style={styles.mainContent}>
           <View style={styles.card}>
@@ -89,7 +97,7 @@ const NotebookCover = ({navigation} ) => {
               </TouchableOpacity>
 
               <TouchableOpacity 
-                style={[styles.indexItem, styles.indexItemHover]}
+                style={styles.indexItem}
                 onPress={() => navigation.navigate('Notas')}
               >
                 <Text style={styles.indexText}>4. Notas</Text>
@@ -104,8 +112,9 @@ const NotebookCover = ({navigation} ) => {
             </View>
           </View>
         </View>
-        <Footer/>
-      </ScrollView>
+      </Animated.ScrollView>
+
+      <Footer scrollY={scrollY} />
     </View>
   );
 }
@@ -113,25 +122,26 @@ const NotebookCover = ({navigation} ) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   scrollView: {
     flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
+    paddingBottom: 60,
   },
   mainContent: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 15,
+    paddingBottom: 100,
+    marginTop: 80,
   },
   card: {
-    backgroundColor: 'white',
+    width: '80%',
+    maxWidth: 600,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderRadius: 20,
-    padding: 15,
-    width: '100%',
-    maxWidth: 450,
+    padding: 20,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -188,15 +198,29 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
   },
   button: {
-    backgroundColor: '#4a90e2',
-    borderRadius: 10,
+    backgroundColor: '#8A2BE2',
+    borderRadius: 15,
     padding: 15,
+    marginTop: 20,
+    marginHorizontal: 10,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase'
   },
   indexContainer: {
     backgroundColor: '#f8f9fa',

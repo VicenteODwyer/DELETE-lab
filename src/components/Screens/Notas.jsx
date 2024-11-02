@@ -1,17 +1,28 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, Animated } from 'react-native';
 import Fondo from '../Hooks/Fondo';
 import Header from '../Hooks/Header';
 import Footer from '../Hooks/Footer';
 import { Ionicons } from '@expo/vector-icons';
 
 const Notas = ({ navigation }) => {
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: true }
+  );
+
   return (
     <View style={styles.container}>
       <Fondo />
       <Header navigation={navigation} />
       
-      <ScrollView style={styles.content}>
+      <Animated.ScrollView
+        style={styles.content}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
         <View style={styles.mainContent}>
           <View style={styles.titleContainer}>
             <Ionicons name="school" size={40} color="#9370DB" />
@@ -67,9 +78,9 @@ const Notas = ({ navigation }) => {
             ))}
           </View>
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
 
-      <Footer />
+      <Footer scrollY={scrollY} />
     </View>
   );
 };

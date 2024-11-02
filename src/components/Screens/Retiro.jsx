@@ -1,17 +1,29 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, StyleSheet, Animated, Image } from 'react-native';
 import Fondo from '../Hooks/Fondo';
 import Header from '../Hooks/Header';
 import Footer from '../Hooks/Footer';
 import { Ionicons } from '@expo/vector-icons';
 
 const Retiro = ({ navigation }) => {
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: true }
+  );
+
   return (
     <View style={styles.container}>
       <Fondo />
       <Header navigation={navigation} />
       
-      <ScrollView style={styles.content}>
+      <Animated.ScrollView 
+        style={styles.content}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      >
         <View style={styles.mainContent}>
           <View style={styles.titleContainer}>
             <Ionicons name="school" size={40} color="#9370DB" />
@@ -46,7 +58,7 @@ const Retiro = ({ navigation }) => {
             
             {[...Array(20)].map((_, index) => (
               <View key={index} style={styles.row}>
-                <View style={styles.cell}>holam</View>
+                <View style={styles.cell}></View>
                 <View style={styles.cell}></View>
                 <View style={styles.cell}></View>
                 <View style={styles.cell}></View>
@@ -54,9 +66,9 @@ const Retiro = ({ navigation }) => {
             ))}
           </View>
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
 
-      <Footer />
+      <Footer scrollY={scrollY} />
     </View>
   );
 };
@@ -64,6 +76,7 @@ const Retiro = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#1e1e1e',
   },
   content: {
     flex: 1,

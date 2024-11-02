@@ -20,13 +20,23 @@ const Mesage = ({ visible, onClose, onSubmit }) => {
     }
   };
 
+  const handleOverlayPress = (event) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
     <Modal
       visible={visible}
       transparent={true}
-      animationType="slide"
+      animationType="fade"
     >
-      <View style={styles.modalContainer}>
+      <TouchableOpacity 
+        style={styles.modalContainer} 
+        activeOpacity={1} 
+        onPress={handleOverlayPress}
+      >
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>Nuevo Comunicado</Text>
@@ -53,7 +63,7 @@ const Mesage = ({ visible, onClose, onSubmit }) => {
             </LinearGradient>
           </TouchableOpacity>
         </View>
-      </View>
+      </TouchableOpacity>
     </Modal>
   );
 };
@@ -61,18 +71,25 @@ const Mesage = ({ visible, onClose, onSubmit }) => {
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    padding: 20,
   },
   modalContent: {
     backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    width: screenWidth,
+    borderRadius: 20,
+    padding: 25,
+    width: screenWidth * 0.9,
     maxHeight: '80%',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   modalHeader: {
     flexDirection: 'row',
