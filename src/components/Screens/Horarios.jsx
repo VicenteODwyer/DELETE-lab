@@ -1,64 +1,110 @@
-import React, { useState } from "react"; // Agregar useState
-import { Text, View, ScrollView, StyleSheet, Button, Modal, Image } from "react-native"; // Importar Modal
-import { LinearGradient } from 'expo-linear-gradient';
+import React from "react";
+import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
 import Footer from '../Hooks/Footer';
 import Header from '../Hooks/Header';
+import Fondo from '../Hooks/Fondo';
+
 const Horario = ({navigation}) => {
     return (
-    <LinearGradient
-    colors={['#6b46c1', '#ec4899']}
-    style={styles.container}
-    >
+    <View style={styles.mainContainer}>
+        <Fondo/>
         <Header/>
-        <View style={styles.titleContainer}>
-            <Text style={styles.title}>EPET N°20</Text>
-            <Text style={styles.subtitle}>Horarios</Text>
-        </View>
-        <View style={styles.contentContainer}>
-            <Text style={styles.classTitle}>Horarios de Clases 6°3°</Text>
-            <Image 
-                source={require('../../images/Horarios/HorarioCLases.jpg')} // Asegúrate de que la ruta sea correcta
-                style={styles.image} // Agrega un estilo para la imagen
-            />
-            <Text style={styles.classTitle}>Horarios de Taller 6°3°</Text>
-            <Image 
-                source={require('../../images/Horarios/HorarioTaller.png')} // Asegúrate de que la ruta sea correcta
-                style={styles.image} // Agrega un estilo para la imagen
-            />
-        </View>
+        <ScrollView style={styles.scrollView}>
+            <View style={styles.titleContainer}>
+                <Text style={styles.title}>EPET N°20</Text>
+                <Text style={styles.subtitle}>Horarios</Text>
+            </View>
+            <View style={styles.contentContainer}>
+                <View style={styles.card}>
+                    <Text style={styles.classTitle}>Horarios de Clases 6°3°</Text>
+                    <Image 
+                        source={require('../../images/Horarios/HorarioCLases.jpg')}
+                        style={styles.image}
+                    />
+                </View>
+                <View style={styles.card}>
+                    <Text style={styles.classTitle}>Horarios de Taller 6°3°</Text>
+                    <Image 
+                        source={require('../../images/Horarios/HorarioTaller.png')}
+                        style={styles.image}
+                    />
+                </View>
+            </View>
+        </ScrollView>
         <Footer/>
-    </LinearGradient>
+    </View>
 );};
 
-// Agrega un estilo para la imagen
 const styles = StyleSheet.create({
-    container: {
+    mainContainer: {
+        flex: 1,
+        backgroundColor: '#1e1e1e',
+    },
+    scrollView: {
         flex: 1,
     },
     titleContainer: {
-        // ... estilos existentes ...
+        alignItems: 'center',
+        paddingVertical: 25,
+        marginBottom: 20,
+    },
+    title: {
+        fontSize: 40,
+        fontWeight: 'bold',
+        color: '#000000',
+        textShadowColor: 'rgba(255, 255, 255, 0.5)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 7,
+        letterSpacing: 2,
+        textAlign: 'center',
+        marginTop: 10,
+    },
+    subtitle: {
+        fontSize: 28,
+        color: '#000000',
+        marginTop: 8,
+        textShadowColor: 'rgba(255, 255, 255, 0.5)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 5,
+        letterSpacing: 1.5,
+    },
+    titleBox: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 15,
+        padding: 12,
+        marginBottom: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        elevation: 6,
     },
     contentContainer: {
         flex: 1,
         alignItems: 'center',
-        padding: 20, // Agrega padding para centrar el contenido horizontalmente
-        justifyContent: 'flex-start', // Cambiado para alinear al inicio
+        padding: 20,
+        justifyContent: 'flex-start',
+    },
+    card: {
+        marginBottom: 20,
     },
     classTitle: {
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: 'bold',
-        color: 'white',
-    },
-    modalView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semi-transparente
+        color: '#000000',
+        textAlign: 'center',
+        textShadowColor: 'rgba(255, 255, 255, 0.3)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 3,
+        letterSpacing: 1,
     },
     image: {
-        width: '100%', // Ajusta el ancho según sea necesario
-        height: 200, // Ajusta la altura según sea necesario
-        resizeMode: 'contain', // Ajusta el modo de redimensionamiento
+        width: '100%',
+        height: 200,
+        resizeMode: 'contain',
     },
 });
 

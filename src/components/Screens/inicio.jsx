@@ -1,130 +1,236 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native'; 
-import { LinearGradient } from 'expo-linear-gradient'; 
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'; 
+import Fondo from '../Hooks/Fondo';
 import Header from '../Hooks/Header';
 import Footer from '../Hooks/Footer';
 
 const NotebookCover = ({navigation} ) => {
-  
-
   return (
-    <LinearGradient
-      colors={['#6b46c1', '#ec4899']}
-      style={styles.container}
-    >
+    <View style={styles.container}>
+      <Fondo />
       <Header/>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>EPET N°20</Text>
-        <Text style={styles.subtitle}>Cuaderno de Comunicaciones</Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <View style={styles.border}>
-          <Text style={styles.infoText}>Nombre del estudiante: </Text>
-          <TextInput
-            style={styles.textInputName}
-            placeholder="Escribe aquí el nombre del estudiante"
-            onChangeText={text => console.log(text)}
-          />
-          <Text style={styles.infoText}>
-            Curso: <TextInput
-              style={styles.textInput}
-              placeholder="Curso"
-              onChangeText={text => console.log(text)}
-            /> División: <TextInput
-              style={styles.textInput}
-              placeholder="División"
-              onChangeText={text => console.log(text)}
-            /> Turno: <TextInput
-              style={styles.textInput}
-              placeholder="Turno"
-              onChangeText={text => console.log(text)}
-            />
-          </Text>
-          <Button
-            style={styles.button}
-            title="Guardar Información"
-            onPress={() => console.log('Información guardada con éxito')}
-          />
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.mainContent}>
+          <View style={styles.card}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>EPET N°20</Text>
+              <Text style={styles.subtitle}>Cuaderno de Comunicaciones</Text>
+            </View>
+            
+            <View style={styles.formContainer}>
+              <Text style={styles.label}>Nombre del estudiante</Text>
+              <TextInput
+                style={styles.textInputName}
+                placeholder="Escribe aquí el nombre del estudiante"
+                placeholderTextColor="#999"
+              />
+              
+              <View style={styles.rowContainer}>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>Curso</Text>
+                  <TextInput
+                    style={styles.textInput}
+                    placeholder="Curso"
+                    placeholderTextColor="#999"
+                  />
+                </View>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>División</Text>
+                  <TextInput
+                    style={styles.textInput}
+                    placeholder="División"
+                    placeholderTextColor="#999"
+                  />
+                </View>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>Turno</Text>
+                  <TextInput
+                    style={styles.textInput}
+                    placeholder="Turno"
+                    placeholderTextColor="#999"
+                  />
+                </View>
+              </View>
+
+              <TouchableOpacity 
+                style={styles.button}
+                onPress={() => console.log('Información guardada con éxito')}
+              >
+                <Text style={styles.buttonText}>Guardar Información</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.indexContainer}>
+              <Text style={styles.indexTitle}>Índice</Text>
+              
+              <TouchableOpacity 
+                style={styles.indexItem}
+                onPress={() => navigation.navigate('Inicio')}
+              >
+                <Text style={styles.indexText}>1. Datos del Alumno</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.indexItem}
+                onPress={() => navigation.navigate('Horario')}
+              >
+                <Text style={styles.indexText}>2. Horario Escolar</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.indexItem}
+                onPress={() => navigation.navigate('Comunicado')}
+              >
+                <Text style={styles.indexText}>3. Comunicados</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={[styles.indexItem, styles.indexItemHover]}
+                onPress={() => navigation.navigate('Notas')}
+              >
+                <Text style={styles.indexText}>4. Notas</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.indexItem}
+                onPress={() => navigation.navigate('Retiro')}
+              >
+                <Text style={styles.indexText}>5. Entrada y retiro en horas sin actividad</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-        <View>
-          <Text style={styles.indexTitle}>Índice</Text>
-          <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('DatosAlumno')}>
-            <Text>1. Datos del Alumno</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('HorarioEscolar')}>
-            <Text>2. Horario Escolar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.indexItem} text= "Comunicados" onPress={ () => navigation.navigate('Comunication')}>
-            <Text>3. Comunicados</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('Notas')}>
-            <Text>4. Notas</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.indexItem} onPress={() => navigation.navigate('EntradaRetiro')}>
-            <Text>5. Entrada y retiro en horas sin actividad</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <Footer/>
-    </LinearGradient>
+        <Footer/>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  mainContent: {
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+  },
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 15,
+    width: '100%',
+    maxWidth: 450,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   titleContainer: {
     alignItems: 'center',
-    zIndex: 10,
-    padding: 16,
+    marginBottom: 15,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
+    color: '#333',
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: 16,
+    color: '#666',
+    marginTop: 5,
   },
-  infoContainer: {
-    zIndex: 10,
-    padding: 16,
+  formContainer: {
+    marginBottom: 15,
   },
-  border: {
-    borderColor: '#9ca3af',
+  label: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 5,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+  },
+  inputGroup: {
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  textInputName: {
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 15,
     borderWidth: 1,
-    padding: 8,
-    marginBottom: 16,
-  },
-  infoText: {
-    fontSize: 12,
-  },
-  indexTitle: {
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  indexItem: {
-    fontSize: 12,
+    borderColor: '#e0e0e0',
   },
   textInput: {
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    padding: 12,
     borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: 'white',
-    width: 75
-  },  
-  textInputName: {
-    borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: 'white',
-    width: 250
-  },  
+    borderColor: '#e0e0e0',
+  },
   button: {
-    backgroundColor: 'skyblue',
-    width: 75,
-    height: 40,
+    backgroundColor: '#4a90e2',
+    borderRadius: 10,
+    padding: 15,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  indexContainer: {
+    backgroundColor: '#f8f9fa',
+    borderRadius: 10,
+    padding: 12,
+  },
+  indexTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+  },
+  indexItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    marginBottom: 6,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  indexItemHover: {
+    backgroundColor: '#f0f0f0',
+  },
+  indexText: {
+    color: '#444',
+    fontSize: 15,
+    fontWeight: '500',
   }
 });
 

@@ -1,39 +1,35 @@
-import React, { useState } from "react"; // Agregar useState
-import { Text, View, ScrollView, StyleSheet, Button, Modal } from "react-native"; // Importar Modal
-import { LinearGradient } from 'expo-linear-gradient';
+import React, { useState } from "react";
+import { Text, View, ScrollView, StyleSheet, Button, Modal } from "react-native";
 import Footer from '../Hooks/Footer';
 import LoginForm from "./Iniciar";
+import Fondo from "../Hooks/Fondo";
 
 const Main = () => {
-  const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
+  const [modalVisible, setModalVisible] = useState(false);
   
   return ( 
-    <LinearGradient
-      colors={['#6b46c1', '#ec4899']}
-      style={styles.container}
-    >
-      
+    <View style={styles.container}>
+      <Fondo/>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.mainContent}>
           <Text style={styles.mainHeading}>Cuaderno Digital</Text>
-          <Button title="Iniciar Sesión" onPress={() => setModalVisible(true)}>Iniciar Sesión</Button> {/* Abrir modal */}
+          <Button title="Iniciar Sesión" onPress={() => setModalVisible(true)}>Iniciar Sesión</Button>
         </View>
         <Footer/>
       </ScrollView>
       
-      {/* Modal para LoginForm */}
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)} // Cerrar modal
+        onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalView}>
-        <Button title="Cerrar" onPress={() => setModalVisible(false)} /> {/* Botón para cerrar */}
+          <Button title="Cerrar" onPress={() => setModalVisible(false)} />
           <LoginForm />
-        </View> 
+        </View>
       </Modal>
-    </LinearGradient>
+    </View>
   );
 };
 
@@ -88,7 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semi-transparente
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 

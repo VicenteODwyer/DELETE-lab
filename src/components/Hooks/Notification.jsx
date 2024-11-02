@@ -1,121 +1,118 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const NotificationPopup = ({ modalVisible, setModalVisible }) => {
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => setModalVisible(false)}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <View style={styles.header}>
-            <Text style={styles.title}>Notificaciones</Text>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={styles.closeButtonText}>✕</Text>
-            </TouchableOpacity>
-          </View>
-          
-          <View style={styles.notificationItem}>
-            <View style={styles.userIcon}>
-              <Text style={styles.userIconText}>U</Text>
+      <TouchableOpacity 
+        style={styles.overlay}
+        activeOpacity={1} 
+        onPress={() => setModalVisible(false)}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.header}>
+              <Text style={styles.title}>Notificaciones</Text>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Ionicons name="close" size={24} color="#333" />
+              </TouchableOpacity>
             </View>
-            <View style={styles.notificationContent}>
-              <Text style={styles.username}>Xx_ExequielWiedermann_xX</Text>
-              <Text style={styles.timestamp}>Desaprobado 3 febrero de 2024</Text>
+            
+            <View style={styles.notificationItem}>
+              <View style={styles.userIcon}>
+                <Ionicons name="person" size={16} color="#9370DB" />
+              </View>
+              <View style={styles.notificationContent}>
+                <Text style={styles.username}>Exequiel Wiedermann</Text>
+                <Text style={styles.timestamp}>Desaprobado • 3 febrero 2024</Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: 'flex-start',
-      alignItems: 'flex-end',
-      marginTop: 22,
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    marginTop: 80,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 15,
+    width: 300,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4
     },
-    modalView: {
-      margin: 20,
-      backgroundColor: '#f0f0f0',
-      borderRadius: 10,
-      width: 300,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5
-    },
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: 15,
-      borderBottomWidth: 1,
-      borderBottomColor: '#ddd',
-    },
-    title: {
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    closeButton: {
-      padding: 5,
-    },
-    closeButtonText: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    },
-    notificationItem: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: 15,
-    },
-    userIcon: {
-      marginRight: 10,
-      width: 24,
-      height: 24,
-      borderRadius: 12,
-      backgroundColor: '#ddd',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    userIconText: {
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    notificationContent: {
-      flex: 1,
-    },
-    username: {
-      fontSize: 14,
-      fontWeight: 'bold',
-      marginBottom: 5,
-    },
-    timestamp: {
-      fontSize: 12,
-      color: '#666',
-    },
-    viewButton: {
-      padding: 10,
-      backgroundColor: '#007BFF',
-      borderRadius: 5,
-      marginBottom: 10,
-    },
-    viewButtonText: {
-      color: '#fff',
-      textAlign: 'center',
-    },
-  });
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 8,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  closeButton: {
+    padding: 5,
+  },
+  notificationItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  userIcon: {
+    marginRight: 12,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notificationContent: {
+    flex: 1,
+  },
+  username: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 4,
+  },
+  timestamp: {
+    fontSize: 13,
+    color: '#666',
+  },
+});
 
 export default NotificationPopup;

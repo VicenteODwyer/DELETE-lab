@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import Header from '../Hooks/Header.jsx';
 import Footer from '../Hooks/Footer.jsx';
 import Component from '../Hooks/Mesage.jsx'; // Importar el componente Component
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Fondo from '../Hooks/Fondo'; // Agregar import de Fondo
 
 const Comunication = ( {navigation} ) => {
   const [messages, setMessages] = useState([]); // Estado para almacenar los mensajes
@@ -17,41 +17,45 @@ const Comunication = ( {navigation} ) => {
   };
 
   return (
-    <LinearGradient
-        colors={['#6b46c1', '#ec4899']}
-        style={styles.container}>
-      <Header/>
-      {/* Botón para abrir el modal de Component */}
-      <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.button}>
-        <Text style={styles.buttonText}><MaterialIcons name="add-comment" size={24} color="black" /></Text>
-      </TouchableOpacity>
-      <Component 
-        visible={modalVisible} 
-        onClose={() => setModalVisible(false)} 
-        onSubmit={handleAddMessage} 
-      />
-      <Text style={styles.title}>Comunicados</Text>
-      <View style={styles.card}>
-      <Text style={styles.subtitle}>Santiago Casetti</Text>
-        <Text style={styles.message}>
-          El día 25/09/23, Santiago Casetti se lesionó jugando al fútbol y terminó con una fractura débil del radio y el codo por lo que queda incapacitado de asistir en la escuela durante 1 mes.
-        </Text>
-        {messages.map((msg, index) => (
-          <View key={index}>
-            <Text style={styles.subtitle}>{author}</Text> {/* Mostrar el autor antes de cada mensaje */}
-            <Text style={styles.message}>{msg}</Text>
-          </View>
-        ))}
+    <View style={styles.mainContainer}>
+      <Fondo/>
+      <View style={styles.container}>
+        <Header/>
+        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.button}>
+          <Text style={styles.buttonText}><MaterialIcons name="add-comment" size={24} color="black" /></Text>
+        </TouchableOpacity>
+        <Component 
+          visible={modalVisible} 
+          onClose={() => setModalVisible(false)} 
+          onSubmit={handleAddMessage} 
+        />
+        <Text style={styles.title}>Comunicados</Text>
+        <View style={styles.card}>
+          <Text style={styles.subtitle}>Santiago Casetti</Text>
+          <Text style={styles.message}>
+            El día 25/09/23, Santiago Casetti se lesionó jugando al fútbol y terminó con una fractura débil del radio y el codo por lo que queda incapacitado de asistir en la escuela durante 1 mes.
+          </Text>
+          {messages.map((msg, index) => (
+            <View key={index}>
+              <Text style={styles.subtitle}>{author}</Text> {/* Mostrar el autor antes de cada mensaje */}
+              <Text style={styles.message}>{msg}</Text>
+            </View>
+          ))}
+        </View>
       </View>
       <Footer/>
-    </LinearGradient>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
   title: {
     fontSize: 24,
@@ -68,7 +72,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     marginBottom: 20,
-    top: 50
+    top: 50,
+    marginHorizontal: 20,
   },
   message: {
     marginTop: 10,
@@ -85,6 +90,11 @@ const styles = StyleSheet.create({
     color: '#fff', // Color del texto del botón
     fontSize: 16,
   },
+  footer: {
+    paddingHorizontal: 0,
+    paddingBottom: 0,
+    marginTop: 'auto',
+  }
 });
 
 export default Comunication;
