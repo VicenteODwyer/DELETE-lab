@@ -1,6 +1,6 @@
 import { useState } from "react";
-import firebase from "firebase/app";
-import "firebase/firestore";
+import { db } from "../../../firebase/firebase";
+import { collection, doc, setDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 
 const useTutor = () => {
     const [dni, setDni] = useState("");
@@ -13,8 +13,8 @@ const useTutor = () => {
     const handleSubmit = async (e, operacion) => {
         e.preventDefault();
         
-        const db = firebase.firestore();
-        const tutorRef = db.collection("tutores").doc(dni);
+        const tutoresRef = collection(db, "tutores");
+        const tutorRef = doc(tutoresRef, dni.toString());
 
         try {
             switch (operacion) {
@@ -26,9 +26,9 @@ const useTutor = () => {
                         email,
                         telefono,
                         habilitar,
-                        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+                        created_at: serverTimestamp(),
                     };
-                    await tutorRef.set(nuevoTutor);
+                    await setDoc(tutorRef, nuevoTutor);
                     alert("Tutor registrado exitosamente");
                     break;
 
@@ -39,16 +39,16 @@ const useTutor = () => {
                         apellido,
                         email,
                         telefono,
-                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                        updated_at: serverTimestamp()
                     };
-                    await tutorRef.update(tutorActualizado);
+                    await updateDoc(tutorRef, tutorActualizado);
                     alert("Tutor actualizado exitosamente");
                     break;
 
                 case 'eliminar':
-                    await tutorRef.update({
+                    await updateDoc(tutorRef, {
                         habilitar: 0,
-                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                        updated_at: serverTimestamp()
                     });
                     setHabilitar(0);
                     alert("Tutor eliminado exitosamente");
@@ -75,6 +75,23 @@ const useTutor = () => {
         setTelefono("");
         setHabilitar(1);
     };
-}
+
+    return {
+        dni,
+        setDni,
+        nombre,
+        setNombre,
+        apellido,
+        setApellido,
+        email,
+        setEmail,
+        telefono,
+        setTelefono,
+        habilitar,
+        setHabilitar,
+        handleSubmit,
+        limpiarFormulario
+    };
+};
 
 export default useTutor;

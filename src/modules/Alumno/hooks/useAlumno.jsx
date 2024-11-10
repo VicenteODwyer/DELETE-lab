@@ -1,6 +1,6 @@
 import { useState } from "react";
-import firebase from "firebase/app";
-import "firebase/firestore";
+import { db } from "../../../firebase/firebase";
+import { collection, doc, setDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 
 const useAlumno = () => {
     const [dni, setDni] = useState("");
@@ -13,8 +13,8 @@ const useAlumno = () => {
     const handleSubmit = async (e, operacion) => {
         e.preventDefault();
         
-        const db = firebase.firestore();
-        const alumnoRef = db.collection("alumnos").doc(dni);
+        const alumnosRef = collection(db, "alumnos");
+        const alumnoRef = doc(alumnosRef, dni);
 
         try {
             switch (operacion) {
@@ -26,9 +26,9 @@ const useAlumno = () => {
                         email,
                         telefono,
                         habilitar,
-                        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+                        created_at: serverTimestamp(),
                     };
-                    await alumnoRef.set(nuevoAlumno);
+                    await setDoc(alumnoRef, nuevoAlumno);
                     alert("Alumno registrado exitosamente");
                     break;
 
@@ -39,16 +39,16 @@ const useAlumno = () => {
                         apellido,
                         email,
                         telefono,
-                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                        updated_at: serverTimestamp()
                     };
-                    await alumnoRef.update(alumnoActualizado);
+                    await updateDoc(alumnoRef, alumnoActualizado);
                     alert("Alumno actualizado exitosamente");
                     break;
 
                 case 'eliminar':
-                    await alumnoRef.update({
+                    await updateDoc(alumnoRef, {
                         habilitar: 0,
-                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                        updated_at: serverTimestamp()
                     });
                     setHabilitar(0);
                     alert("Alumno eliminado exitosamente");
@@ -75,6 +75,23 @@ const useAlumno = () => {
         setTelefono("");
         setHabilitar(1);
     };
-}
+
+    return {
+        dni,
+        setDni,
+        nombre,
+        setNombre,
+        apellido,
+        setApellido,
+        email,
+        setEmail,
+        telefono,
+        setTelefono,
+        habilitar,
+        setHabilitar,
+        handleSubmit,
+        limpiarFormulario
+    };
+};
 
 export default useAlumno;

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import firebase from "firebase/app";
-import "firebase/firestore";
+import { db } from "../../../firebase/firebase";
+import { collection, doc, setDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 
 const useProfesor = () => {
     const [dni, setDni] = useState("");
@@ -13,8 +13,8 @@ const useProfesor = () => {
     const handleSubmit = async (e, operacion) => {
         e.preventDefault();
         
-        const db = firebase.firestore();
-        const profesorRef = db.collection("profesores").doc(dni);
+        const profesoresRef = collection(db, "profesores");
+        const profesorRef = doc(profesoresRef, dni.toString());
 
         try {
             switch (operacion) {
@@ -26,9 +26,9 @@ const useProfesor = () => {
                         email,
                         telefono,
                         habilitar,
-                        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+                        created_at: serverTimestamp(),
                     };
-                    await profesorRef.set(nuevoProfesor);
+                    await setDoc(profesorRef, nuevoProfesor);
                     alert("Profesor registrado exitosamente");
                     break;
 
@@ -39,16 +39,16 @@ const useProfesor = () => {
                         apellido,
                         email,
                         telefono,
-                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                        updated_at: serverTimestamp()
                     };
-                    await profesorRef.update(profesorActualizado);
+                    await updateDoc(profesorRef, profesorActualizado);
                     alert("Profesor actualizado exitosamente");
                     break;
 
                 case 'eliminar':
-                    await profesorRef.update({
+                    await updateDoc(profesorRef, {
                         habilitar: 0,
-                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                        updated_at: serverTimestamp()
                     });
                     setHabilitar(0);
                     alert("Profesor eliminado exitosamente");
@@ -75,6 +75,23 @@ const useProfesor = () => {
         setTelefono("");
         setHabilitar(1);
     };
-}
+
+    return {
+        dni,
+        setDni,
+        nombre,
+        setNombre,
+        apellido,
+        setApellido,
+        email,
+        setEmail,
+        telefono,
+        setTelefono,
+        habilitar,
+        setHabilitar,
+        handleSubmit,
+        limpiarFormulario
+    };
+};
 
 export default useProfesor;

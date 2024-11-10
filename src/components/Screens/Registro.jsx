@@ -2,20 +2,56 @@ import React, { useState } from "react";
 import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Footer from '../Hooks/Footer';
 import Fondo from "../Hooks/Fondo";
+import useSwitch from '../Hooks/useSwitch';
 
 const Registro = () => {
+  const { handleRolSubmit, error } = useSwitch();
   const [formData, setFormData] = useState({
+    dni: '',
     nombre: '',
     apellido: '',
     email: '',
     telefono: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    rol: ''
   });
 
-  const handleRegister = () => {
-    // Aquí irá la lógica para registrar al usuario
-    console.log('Datos de registro:', formData);
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    
+    if (!formData.dni || formData.dni.length < 7) {
+      alert('Por favor ingresa un DNI válido');
+      return;
+    }
+
+    if (!formData.rol) {
+      alert('Por favor selecciona un rol');
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
+
+    try {
+      await handleRolSubmit(formData, 'crear');
+      // Limpiamos el formulario después del registro exitoso
+      setFormData({
+        dni: '',
+        nombre: '',
+        apellido: '',
+        email: '',
+        telefono: '',
+        password: '',
+        confirmPassword: '',
+        rol: ''
+      });
+      alert('Usuario registrado exitosamente');
+    } catch (error) {
+      alert(error.message || 'Error al registrar usuario');
+    }
   };
 
   return (
@@ -26,6 +62,60 @@ const Registro = () => {
           <Text style={styles.mainHeading}>Registro de Usuario</Text>
           
           <View style={styles.formContainer}>
+            <View style={styles.rolContainer}>
+              <Text style={styles.rolLabel}>Selecciona tu rol:</Text>
+              <View style={styles.rolOptions}>
+                <TouchableOpacity 
+                  style={[
+                    styles.rolButton,
+                    formData.rol === 'alumno' && styles.rolButtonActive
+                  ]}
+                  onPress={() => setFormData({...formData, rol: 'alumno'})}
+                >
+                  <Text style={[
+                    styles.rolButtonText,
+                    formData.rol === 'alumno' && styles.rolButtonTextActive
+                  ]}>Alumno</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                  style={[
+                    styles.rolButton,
+                    formData.rol === 'profesor' && styles.rolButtonActive
+                  ]}
+                  onPress={() => setFormData({...formData, rol: 'profesor'})}
+                >
+                  <Text style={[
+                    styles.rolButtonText,
+                    formData.rol === 'profesor' && styles.rolButtonTextActive
+                  ]}>Profesor</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                  style={[
+                    styles.rolButton,
+                    formData.rol === 'preceptor' && styles.rolButtonActive
+                  ]}
+                  onPress={() => setFormData({...formData, rol: 'preceptor'})}
+                >
+                  <Text style={[
+                    styles.rolButtonText,
+                    formData.rol === 'preceptor' && styles.rolButtonTextActive
+                  ]}>Preceptor</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <TextInput
+              style={styles.input}
+              placeholder="DNI"
+              placeholderTextColor="#666"
+              value={formData.dni}
+              onChangeText={(text) => setFormData({...formData, dni: text})}
+              keyboardType="numeric"
+              maxLength={8}
+            />
+
             <TextInput
               style={styles.input}
               placeholder="Nombre"
@@ -155,7 +245,39 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     textDecorationLine: 'underline',
-  }
+  },
+  rolContainer: {
+    marginBottom: 20,
+  },
+  rolLabel: {
+    color: 'white',
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  rolOptions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+  },
+  rolButton: {
+    flex: 1,
+    padding: 10,
+    marginHorizontal: 5,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    alignItems: 'center',
+  },
+  rolButtonActive: {
+    backgroundColor: '#8A2BE2',
+  },
+  rolButtonText: {
+    color: 'white',
+    fontSize: 14,
+  },
+  rolButtonTextActive: {
+    fontWeight: 'bold',
+  },
 });
 
 export default Registro;
