@@ -10,51 +10,71 @@ const usePreceptor = () => {
     const [telefono, setTelefono] = useState("");
     const [habilitar, setHabilitar] = useState(1);
 
-    const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e, operacion) => {
+        e.preventDefault();
+        
+        const db = firebase.firestore();
+        const preceptorRef = db.collection("preceptores").doc(dni);
 
-    const nuevoPreceptor = {
-        dni,
-        nombre,
-        apellido,
-        email,
-        telefono,
-        habilitar,
-        created_at: firebase.firestore.FieldValue.serverTimestamp(),
-    };
+        try {
+            switch (operacion) {
+                case 'crear':
+                    const nuevoPreceptor = {
+                        dni,
+                        nombre,
+                        apellido,
+                        email,
+                        telefono,
+                        habilitar,
+                        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+                    };
+                    await preceptorRef.set(nuevoPreceptor);
+                    alert("Preceptor registrado exitosamente");
+                    break;
 
-    try {
-        await firebase.firestore().collection("preceptores").doc(dni).set(nuevoPreceptor);
-        alert("Preceptor registrado exitosamente");
-        limpiarFormulario();
+                case 'actualizar':
+                    const preceptorActualizado = {
+                        dni,
+                        nombre,
+                        apellido,
+                        email,
+                        telefono,
+                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    await preceptorRef.update(preceptorActualizado);
+                    alert("Preceptor actualizado exitosamente");
+                    break;
+
+                case 'eliminar':
+                    await preceptorRef.update({
+                        habilitar: 0,
+                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    setHabilitar(0);
+                    alert("Preceptor eliminado exitosamente");
+                    break;
+
+                default:
+                    throw new Error("Operación no válida");
+            }
+            
+            if (operacion !== 'eliminar') {
+                limpiarFormulario();
+            }
         } catch (error) {
-        console.error("Error al registrar al preceptor: ", error);
-    }
-    try {
-        await firebase.firestore().collection("preceptores").doc(dni).update(nuevoPreceptor);
-        alert("Preceptor actualizado exitosamente");
-        limpiarFormulario();
-        } catch (error) {
-        console.error("Error al actualizar al Preceptor: ", error);
-    }
-    try {
-        await firebase.firestore().collection("preceptores").doc(dni).update({
-            habilitar: 0,
-            updated_at: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        setHabilitar(0);
-        alert("Preceptor eliminado exitosamente");
-        } catch (error) {
-        console.error("Error al eliminar al Preceptor: ", error);
-    }
+            console.error(`Error al ${operacion} al preceptor:`, error);
+            alert(`Error al ${operacion} al preceptor`);
+        }
     };
 
     const limpiarFormulario = () => {
         setDni("");
         setNombre("");
-        setApelldnio("");
+        setApellido("");
         setEmail("");
         setTelefono("");
         setHabilitar(1);
     };
 }
+
+export default usePreceptor;

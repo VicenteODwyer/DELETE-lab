@@ -10,51 +10,71 @@ const useTutor = () => {
     const [telefono, setTelefono] = useState("");
     const [habilitar, setHabilitar] = useState(1);
 
-    const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e, operacion) => {
+        e.preventDefault();
+        
+        const db = firebase.firestore();
+        const tutorRef = db.collection("tutores").doc(dni);
 
-    const nuevoTutor = {
-        dni,
-        nombre,
-        apellido,
-        email,
-        telefono,
-        habilitar,
-        created_at: firebase.firestore.FieldValue.serverTimestamp(),
-    };
+        try {
+            switch (operacion) {
+                case 'crear':
+                    const nuevoTutor = {
+                        dni,
+                        nombre,
+                        apellido,
+                        email,
+                        telefono,
+                        habilitar,
+                        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+                    };
+                    await tutorRef.set(nuevoTutor);
+                    alert("Tutor registrado exitosamente");
+                    break;
 
-    try {
-        await firebase.firestore().collection("Tutores").doc(dni).set(nuevoTutor);
-        alert("Tutor registrado exitosamente");
-        limpiarFormulario();
+                case 'actualizar':
+                    const tutorActualizado = {
+                        dni,
+                        nombre,
+                        apellido,
+                        email,
+                        telefono,
+                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    await tutorRef.update(tutorActualizado);
+                    alert("Tutor actualizado exitosamente");
+                    break;
+
+                case 'eliminar':
+                    await tutorRef.update({
+                        habilitar: 0,
+                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    setHabilitar(0);
+                    alert("Tutor eliminado exitosamente");
+                    break;
+
+                default:
+                    throw new Error("Operación no válida");
+            }
+            
+            if (operacion !== 'eliminar') {
+                limpiarFormulario();
+            }
         } catch (error) {
-        console.error("Error al registrar al Tutor: ", error);
-    }
-    try {
-        await firebase.firestore().collection("tutores").doc(dni).update(nuevoTutor);
-        alert("Tutor actualizado exitosamente");
-        limpiarFormulario();
-        } catch (error) {
-        console.error("Error al actualizar al Tutor: ", error);
-    }
-    try {
-        await firebase.firestore().collection("tutores").doc(dni).update({
-            habilitar: 0,
-            updated_at: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        setHabilitar(0);
-        alert("Tutor deshabilitado exitosamente");
-        } catch (error) {
-        console.error("Error al eliminar al Tutor: ", error);
-    }
+            console.error(`Error al ${operacion} al tutor:`, error);
+            alert(`Error al ${operacion} al tutor`);
+        }
     };
 
     const limpiarFormulario = () => {
         setDni("");
         setNombre("");
-        setApelldnio("");
+        setApellido("");
         setEmail("");
         setTelefono("");
         setHabilitar(1);
     };
 }
+
+export default useTutor;

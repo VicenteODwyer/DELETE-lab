@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Linking, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const Footer = ({ scrollY }) => {
+const Footer = ({ scrollY = new Animated.Value(0) }) => {
   const translateY = scrollY.interpolate({
     inputRange: [0, 200],
     outputRange: [45, 0],

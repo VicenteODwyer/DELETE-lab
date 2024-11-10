@@ -10,51 +10,71 @@ const useAlumno = () => {
     const [telefono, setTelefono] = useState("");
     const [habilitar, setHabilitar] = useState(1);
 
-    const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e, operacion) => {
+        e.preventDefault();
+        
+        const db = firebase.firestore();
+        const alumnoRef = db.collection("alumnos").doc(dni);
 
-    const nuevoAlumno = {
-        dni,
-        nombre,
-        apellido,
-        email,
-        telefono,
-        habilitar,
-        created_at: firebase.firestore.FieldValue.serverTimestamp(),
-    };
+        try {
+            switch (operacion) {
+                case 'crear':
+                    const nuevoAlumno = {
+                        dni,
+                        nombre,
+                        apellido,
+                        email,
+                        telefono,
+                        habilitar,
+                        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+                    };
+                    await alumnoRef.set(nuevoAlumno);
+                    alert("Alumno registrado exitosamente");
+                    break;
 
-    try {
-        await firebase.firestore().collection("alumnos").doc(dni).set(nuevoAlumno);
-        alert("Alumno registrado exitosamente");
-        limpiarFormulario();
+                case 'actualizar':
+                    const alumnoActualizado = {
+                        dni,
+                        nombre,
+                        apellido,
+                        email,
+                        telefono,
+                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    await alumnoRef.update(alumnoActualizado);
+                    alert("Alumno actualizado exitosamente");
+                    break;
+
+                case 'eliminar':
+                    await alumnoRef.update({
+                        habilitar: 0,
+                        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    setHabilitar(0);
+                    alert("Alumno eliminado exitosamente");
+                    break;
+
+                default:
+                    throw new Error("Operación no válida");
+            }
+            
+            if (operacion !== 'eliminar') {
+                limpiarFormulario();
+            }
         } catch (error) {
-        console.error("Error al registrar al alumno: ", error);
-    }
-    try {
-        await firebase.firestore().collection("alumnos").doc(dni).update(nuevoProfesor);
-        alert("Alumno actualizado exitosamente");
-        limpiarFormulario();
-        } catch (error) {
-        console.error("Error al actualizar al Alumno: ", error);
-    }
-    try {
-        await firebase.firestore().collection("alumnos").doc(dni).update({
-            habilitar: 0,
-            updated_at: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        setHabilitar(0);
-        alert("Alumno eliminado exitosamente");
-        } catch (error) {
-        console.error("Error al eliminar al Alumno: ", error);
-    }
+            console.error(`Error al ${operacion} al alumno:`, error);
+            alert(`Error al ${operacion} al alumno`);
+        }
     };
 
     const limpiarFormulario = () => {
         setDni("");
         setNombre("");
-        setApelldnio("");
+        setApellido("");
         setEmail("");
         setTelefono("");
         setHabilitar(1);
     };
 }
+
+export default useAlumno;
