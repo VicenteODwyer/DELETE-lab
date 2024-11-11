@@ -3,12 +3,48 @@ import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity } from 
 import Footer from '../Hooks/Footer';
 import Fondo from "../Hooks/Fondo";
 import { useNavigation } from '@react-navigation/native';
+import { auth } from '../../firebase/firebase';
+import { 
+  signInWithEmailAndPassword, 
+  GoogleAuthProvider, 
+  FacebookAuthProvider,
+  signInWithPopup 
+} from 'firebase/auth';
 
 const Main = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
   
+  const handleEmailLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigation.navigate('Inicio');
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error.message);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      navigation.navigate('Inicio');
+    } catch (error) {
+      console.error('Error con Google:', error.message);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const provider = new FacebookAuthProvider();
+      await signInWithPopup(auth, provider);
+      navigation.navigate('Inicio');
+    } catch (error) {
+      console.error('Error con Facebook:', error.message);
+    }
+  };
+
   return ( 
     <View style={styles.container}>
       <Fondo/>
@@ -38,10 +74,26 @@ const Main = () => {
             
             <TouchableOpacity 
               style={styles.loginButton}
-              onPress={() => console.log('Iniciar sesión')}
+              onPress={handleEmailLogin}
             >
               <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
             </TouchableOpacity>
+
+            <View style={styles.socialButtonsContainer}>
+              <TouchableOpacity 
+                style={[styles.socialButton, styles.googleButton]}
+                onPress={handleGoogleLogin}
+              >
+                <Text style={styles.socialButtonText}>Continuar con Google</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={[styles.socialButton, styles.facebookButton]}
+                onPress={handleFacebookLogin}
+              >
+                <Text style={styles.socialButtonText}>Continuar con Facebook</Text>
+              </TouchableOpacity>
+            </View>
 
             <TouchableOpacity 
               style={styles.registerButton}
@@ -148,6 +200,31 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     textDecorationLine: 'underline',
+  },
+  socialButtonsContainer: {
+    marginTop: 20,
+    width: '100%',
+  },
+  socialButton: {
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  googleButton: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  facebookButton: {
+    backgroundColor: '#1877F2',
+  },
+  socialButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginLeft: 10,
   },
 });
 
